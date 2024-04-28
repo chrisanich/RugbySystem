@@ -14,8 +14,6 @@ public class Team extends Person {
         // Make sure that every attribute you are super-ing from here
         // is constructed at the parent level
         super (id, first_name, last_name, email, gender);
-    }
-    
-    
+    } 
 }
 
