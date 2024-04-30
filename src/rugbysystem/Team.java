@@ -4,15 +4,39 @@
  */
 package rugbysystem;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author chrisanich
  */
-public class Team extends Team_Class {
+public class Team { 
+    //We start creating all the atributes of the class. What attributes are
+    //necessary were invented.
+    private String team_name;
+    private ArrayList<Coach>  coaches;
+    private ArrayList<Player> players;
     
-    public Team (int team_id, String team_name, String team_coach, String team_country, String team_city) {
-        // Make sure that every attribute you are super-ing from here
-        // is constructed at the parent level
-        super (team_id, team_name, team_coach, team_country, team_city);
-    }  
+    //We create a constructor (method) for this class, which allows us tho add different
+    //attributes to it. So, every time we create an object with this class
+    //it will have all the attributes inside it.
+    public Team (String team_name) {
+        //The next line add different attributes to every actor from the class
+        //Coach. With this, we create atributes and assign its value when using
+        //this method
+        this.team_name = team_name;
+        this.coaches = new ArrayList<>();
+        this.players = new ArrayList<>();
+
+    }
+    
+    //Inside the class we are calling a method to get the information we need 
+    //for everyone of the attributes of the class
+    public void addCoach (Coach coach) {
+        coaches.add(coach);
+    }
+    
+    public void addPlayer (Player player) {
+        players.add(player);
+    }
 }
