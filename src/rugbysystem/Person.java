@@ -16,11 +16,12 @@ public class Person {
     private String last_name;
     private String email;
     private String gender;
+    private String team;
     
     //We create a constructor (method) for this class, which allows us tho add different
     //attributes to it. So, every time we create an object with this class
     //it will have all the attributes inside it.
-    public Person (int id, String first_name, String second_name, String email, String gender) {
+    public Person (int id, String first_name, String second_name, String email, String gender, String team) {
         //The next line add different attributes to every actor from the class
         //Coach. With this, we create atributes and assign its value when using
         //this method
@@ -30,6 +31,7 @@ public class Person {
         this.last_name = last_name;
         this.email = email;
         this.gender = gender;
+        this.team = team;
     }
     
     //Inside the class we are calling a method to get the information we need 
@@ -58,4 +60,9 @@ public class Person {
         //This method returns the current state(value) of "this.gender" 
         return gender;
     }  
+    
+    public String getTeam () {
+        //This method returns the current state(value) of "this.gender" 
+        return team;
+    }
 }

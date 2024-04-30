@@ -8,12 +8,11 @@ package rugbysystem;
  *
  * @author chrisanich
  */
-public class Team extends Person {
+public class Team extends Team_Class {
     
-    public Team (int id, String first_name, String last_name, String email, String gender) {
+    public Team (int team_id, String team_name, String team_coach, String team_country, String team_city) {
         // Make sure that every attribute you are super-ing from here
         // is constructed at the parent level
-        super (id, first_name, last_name, email, gender);
-    } 
+        super (team_id, team_name, team_coach, team_country, team_city);
+    }  
 }
-

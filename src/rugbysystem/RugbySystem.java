@@ -10,7 +10,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.io.FileReader;
 
-
 /**
  *
  * @author chrisanich
