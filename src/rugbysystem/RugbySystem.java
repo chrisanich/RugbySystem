@@ -49,7 +49,7 @@ String filename = "Club_Form.txt";
         //The next try catch contains a Scanner readFileLines, which stores the
         //information recovered by the FileReader from the text (.txt file)
         try (Scanner readFileLines = new Scanner(new FileReader(filename))) {
-            //this allows us to start reading from the 2nd line of the file, 
+            //This allows us to start reading from the 2nd line of the file, 
             //considering that it contains the titles or description of every
             //column of data
             readFileLines.nextLine();
@@ -82,7 +82,7 @@ String filename = "Club_Form.txt";
             //We confirm that the file was read successfully
             System.out.println("\nFile read successfully...\n");
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Filename incorrect. Please enter a valid one...");
         }
         
         //Let's print the contents of the 'people' array list

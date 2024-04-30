@@ -16,9 +16,7 @@ public class Player extends Person {
         // is constructed at the parent level
         super (id, first_name, last_name, email, gender);
         this.team = team;
-
         
     }
-    
     
 }
