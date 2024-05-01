@@ -8,18 +8,17 @@ package rugbysystem;
  *
  * @author chrisanich
  */
-public class Coach extends Person {
-    Team team;
+    public class Coach extends Person {
+    private Team assignedTeam;
     
-    public Coach (int id, String first_name, String last_name, String email, String gender, Team team) {
-        // Make sure that every attribute you are super-ing from here
-        // is constructed at the parent level
-        super (id, first_name, last_name, email, gender);
-        this.team = team;
+    public Coach(int id, String first_name, String last_name, String email, String gender, Team team) {
+        super(id, first_name, last_name, email, gender);
+        this.assignedTeam = team;
     }
     
     public void assignTeam(Team team) {
-        this.team = team;
-        team.addCoach(this); // Add this player to the provided team
+        this.assignedTeam = team;
     }
 }
+
+

@@ -32,6 +32,10 @@ public class Team {
     
     //Inside the class we are calling a method to get the information we need 
     //for everyone of the attributes of the class
+    public String getTeamName() {
+        return team_name;
+    }
+    
     public void addCoach (Coach coach) {
         coaches.add(coach);
     }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  *
@@ -103,11 +104,20 @@ String filename = "Club_Form.txt";
                 String gender = parts[4];
                 //Here, we create a new Person class element and...
                 Person person = new Person(id, first_name, last_name, email, gender);
+                
+                // Randomly assign a team to the person
+                Random random = new Random();
+                Team randomTeam = teams.get(random.nextInt(teams.size()));
+                person.assignTeam(randomTeam);
+                
+                
                 //we store it on the people list (ArrayList)
                 people.add(person);
             }
+            
             //We confirm that the file was read successfully
             System.out.println("\nFile read successfully...\n");
+            
         } catch (IOException e) {
             System.out.println("Filename incorrect. Please enter a valid one...");
         }
@@ -119,6 +129,7 @@ String filename = "Club_Form.txt";
             System.out.println("Last Name: " + person.getLastName());
             System.out.println("Email: " + person.getEmail());
             System.out.println("Gender: " + person.getGender());
+            System.out.println("Team: " + person.getTeam().getTeamName()); // Display the assigned team name
             System.out.println();
         }
         //Finally, we close the user scanner to avoid leak of data
@@ -130,6 +141,4 @@ String filename = "Club_Form.txt";
         
     }
     
-    
- 
 }

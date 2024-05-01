@@ -16,6 +16,7 @@ public class Person {
     private String last_name;
     private String email;
     private String gender;
+    private Team team;
     
     //We create a constructor (method) for this class, which allows us tho add different
     //attributes to it. So, every time we create an object with this class
@@ -58,6 +59,14 @@ public class Person {
     public String getGender () {
         //This method returns the current state(value) of "this.gender" 
         return gender;
-    }  
+    }
+    
+    public Team getTeam() {
+        return team;
+    }
+    
+    public void assignTeam(Team team) {
+        this.team = team;
+}
     
 }
