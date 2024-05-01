@@ -14,7 +14,20 @@ import java.io.IOException;
  *
  * @author chrisanich
  */
-public class RugbySystem {
+public class RugbySystem implements Menu{
+    
+    @Override
+    public void sortPeople(){};
+    
+    @Override
+    public void searchPeople(){};
+    
+    @Override
+    public void addPerson(){};
+    
+    @Override
+    public void getRandomPerson(){};
+    
 
     /**
      * @param args the command line arguments
@@ -23,6 +36,14 @@ public class RugbySystem {
         //First step is to create a Scanner to read input from the user's
         //keyboard.
         Scanner myKB = new Scanner(System.in);
+        
+        //We create an instance of the interface to allow us
+        RugbySystem rugby = new RugbySystem();
+        
+        //Since the number options in the enums 
+        //is indexed from the 0 position 
+        //Therefor we need to create a way to deduct user input from -1 to get a 0
+        Menu.MenuOption selectOption = null;
         
         //Let's create team names from the class Team (in the same project)
         Team team01 = new Team("Colo-Colo");
@@ -46,6 +67,12 @@ String filename = "Club_Form.txt";
         //different index of the list.
         List<Person> people = new ArrayList<>();
         
+        //Now, we create an array list wich will store every Team (Class).
+        List<Team> teams = new ArrayList<>();
+        teams.add(team01);
+        teams.add(team02);
+        teams.add(team03);
+        teams.add(team04);
         //The next try catch contains a Scanner readFileLines, which stores the
         //information recovered by the FileReader from the text (.txt file)
         try (Scanner readFileLines = new Scanner(new FileReader(filename))) {
@@ -96,6 +123,13 @@ String filename = "Club_Form.txt";
         }
         //Finally, we close the user scanner to avoid leak of data
         myKB.close();
+        
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+        //Execution of the methods
+        
     }
     
+    
+ 
 }

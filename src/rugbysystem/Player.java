@@ -16,7 +16,10 @@ public class Player extends Person {
         // is constructed at the parent level
         super (id, first_name, last_name, email, gender);
         this.team = team;
-        
     }
     
+    public void assignTeam(Team team) {
+        this.team = team;
+        team.addPlayer(this); // Add this player to the provided team
+    }
 }

@@ -18,5 +18,8 @@ public class Coach extends Person {
         this.team = team;
     }
     
-    
+    public void assignTeam(Team team) {
+        this.team = team;
+        team.addCoach(this); // Add this player to the provided team
+    }
 }
