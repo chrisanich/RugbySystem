@@ -4,22 +4,21 @@
  */
 package rugbysystem;
 
-import java.util.List;
-import java.util.Random;
-
-/**
- *
- * @author chrisanich
- */
 public class Method {
     
-    public void sortPeople () {}
+    public void sortPeople() {
+        // Implementation of sorting people
+    }
     
-    public void searchPeople () {}
+    public void searchPeople() {
+        // Implementation of searching people
+    }
     
-    public void addPerson (Coach coach) {}
+    public void addPerson() {
+        // Implementation of adding a person
+    }
     
-    public void getRandomPerson () {}
-    
-    
+    public void getRandomPerson() {
+        // Implementation of getting a random person
+    }
 }

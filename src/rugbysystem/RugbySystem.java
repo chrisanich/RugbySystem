@@ -129,7 +129,7 @@ String filename = "Club_Form.txt";
             System.out.println("Last Name: " + person.getLastName());
             System.out.println("Email: " + person.getEmail());
             System.out.println("Gender: " + person.getGender());
-            System.out.println("Team: " + person.getTeam().getTeamName()); // Display the assigned team name
+            System.out.println("Team: " + person.getTeam().getTeamName()); //Display the assigned team name
             System.out.println();
         }
         //Finally, we close the user scanner to avoid leak of data
