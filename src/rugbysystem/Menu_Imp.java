@@ -21,12 +21,14 @@ public class Menu_Imp {
         Menu.MenuOption selectOption = null;
         
         do {
+            System.out.println("*****MAIN MENU*****");
+            System.out.println("-------------------");
             System.out.println("Please Select an option: ");
-            System.out.println("1. List All Animals");
-            System.out.println("2. List Animal Types");
-            System.out.println("3. Add Animal");
-            System.out.println("4. Get Random Animal");
-            System.out.println("5. Exit");
+            System.out.println("1. Sort people alphabetically by last name");
+            System.out.println("2. Search people");
+            System.out.println("3. Add a person to the list");
+            System.out.println("4. Get a random person from the list");
+            System.out.println("5. Exit the program");
         
             while (!scanner.hasNextInt()) {
                 System.out.println("Please enter a valid number!");

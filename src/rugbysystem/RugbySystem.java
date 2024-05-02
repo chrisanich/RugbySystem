@@ -34,6 +34,7 @@ public class RugbySystem implements Menu{
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Menu_Imp menu = new Menu_Imp();
         //First step is to create a Scanner to read input from the user's
         //keyboard.
         Scanner myKB = new Scanner(System.in);
@@ -123,6 +124,7 @@ String filename = "Club_Form.txt";
         }
         
         //Let's print the contents of the 'people' array list
+        /*
         for (Person person : people) {
             System.out.println("ID: " + person.getId());
             System.out.println("First Name: " + person.getFirstName());
@@ -132,13 +134,16 @@ String filename = "Club_Form.txt";
             System.out.println("Team: " + person.getTeam().getTeamName()); //Display the assigned team name
             System.out.println();
         }
-        //Finally, we close the user scanner to avoid leak of data
-        myKB.close();
+        */
         
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
         //Execution of the methods
+        menu.main_menu(myKB);
         
+        
+        //Finally, we close the user scanner to avoid leak of data
+        myKB.close();
     }
     
 }
