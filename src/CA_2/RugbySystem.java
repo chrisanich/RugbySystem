@@ -46,13 +46,7 @@ public class RugbySystem implements Menu{
         //is indexed from the 0 position 
         //Therefor we need to create a way to deduct user input from -1 to get a 0
         Menu.MenuOption selectOption = null;
-        
-        //Let's create team names from the class Team (in the same project)
-        Team team01 = new Team("Colo-Colo");
-        Team team02 = new Team("Universidad de Chile");
-        Team team03 = new Team("Universidad Católica");
-        Team team04 = new Team("O'Higgins de Rancagua");
-        
+         
         //We prompt the user to write the name of a file .txt to read.
         System.out.println("Please enter a filename to read: ");
         //////////
@@ -65,9 +59,15 @@ public class RugbySystem implements Menu{
 String filename = "Club_Form.txt";
         
         //Now, we create an array list wich will store every Person (Class).
-        //This will help us organise every line of data of our file in a
+        //This will help us organise every line of data of 2our file in a
         //different index of the list.
         List<Person> people = new ArrayList<>();
+        
+        //Let's create team names from the class Team (in the same project)
+        Team team01 = new Team("Colo-Colo");
+        Team team02 = new Team("Universidad de Chile");
+        Team team03 = new Team("Universidad Católica");
+        Team team04 = new Team("O'Higgins de Rancagua");
         
         //Now, we create an array list wich will store every Team (Class).
         List<Team> teams = new ArrayList<>();
@@ -75,6 +75,10 @@ String filename = "Club_Form.txt";
         teams.add(team02);
         teams.add(team03);
         teams.add(team04);
+        
+        //We instantiate a variable int count to be able to
+        int count = 0;
+        
         //The next try catch contains a Scanner readFileLines, which stores the
         //information recovered by the FileReader from the text (.txt file)
         try (Scanner readFileLines = new Scanner(new FileReader(filename))) {
@@ -139,7 +143,7 @@ String filename = "Club_Form.txt";
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
         //Execution of the methods
-        menu.main_menu(myKB);
+        menu.main_menu(myKB, people);
         
         
         //Finally, we close the user scanner to avoid leak of data

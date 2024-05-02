@@ -4,9 +4,11 @@
  */
 package CA_2;
 
-import java.util.Scanner;
-import CA_2.Menu.MenuOption;
+import CA_2.Person;
 import CA_2.Method;
+import CA_2.Menu.MenuOption;
+import java.util.Scanner;
+import java.util.List;
 
 /**
  *
@@ -14,7 +16,7 @@ import CA_2.Method;
  */
 public class Menu_Imp {
     
-    public static void main_menu (Scanner myKB) {
+    public static void main_menu (Scanner myKB, List<Person> people) {
         Scanner scanner = new Scanner(System.in);
         Method method = new Method(); // Create an instance of the Method class
         
@@ -43,16 +45,19 @@ public class Menu_Imp {
                 selectOption = Menu.MenuOption.values()[option - 1];
                 switch (selectOption) {
                     case SORT_PEOPLE:
-                        method.sortPeople(); // Call the method from the Method class
+                        method.sortPeople(people, 0, people.size() - 1);
+                        method.printList(people);
                         break;
                     case SEARCH_PERSON:
-                        method.searchPeople(); // Call the method from the Method class
+                        System.out.println("\nPlease enter the last name of the player or coach"
+                                + "you are looking for: ");
+                        method.searchPeople(people, myKB.nextLine()); // Call the method from the Method class
                         break;
                     case ADD_PERSON:
-                        method.addPerson(); // Call the method from the Method class
+                        method.addPerson(people); // Call the method from the Method class
                         break;
                     case GET_RANDOM_PERSON:
-                        method.getRandomPerson(); // Call the method from the Method class
+                        method.getRandomPerson(people); // Call the method from the Method class
                         break;
                     case EXIT:
                         System.out.println("Exiting Program..");
