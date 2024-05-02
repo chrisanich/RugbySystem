@@ -1,10 +1,15 @@
 package CA_2;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ *
+ * @author chrisanich
+ */
 public class Method {
 
 
