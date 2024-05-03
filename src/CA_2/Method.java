@@ -11,7 +11,8 @@ import java.util.Scanner;
  * @author chrisanich
  */
 public class Method {
-
+    
+    ////////////////////////////////////////////////////////////////////////////
 
     public void sortPeople(List<Person> people, int left, int right) {
         if (left < right) {
@@ -64,24 +65,24 @@ public class Method {
     ////////////////////////////////////////////////////////////////////////////
     
     public void searchPeople(List<Person> people, String last_name) {
-    for (Person person : people) {
-        if (person.getLastName().equalsIgnoreCase(last_name)) {
-            // Print the details of the found person
-            System.out.println("Person found:");
-            System.out.println("ID: " + person.getId());
-            System.out.println("First Name: " + person.getFirstName());
-            System.out.println("Last Name: " + person.getLastName());
-            System.out.println("Email: " + person.getEmail());
-            System.out.println("Gender: " + person.getGender());
-            System.out.println("Team: " + person.getTeam().getTeamName());
-            System.out.println();
-            return; // Exit the method after finding the first matching person
+        for (Person person : people) {
+            if (person.getLastName().equalsIgnoreCase(last_name)) {
+                // Print the details of the found person
+                System.out.println("Person found:");
+                System.out.println("ID: " + person.getId());
+                System.out.println("First Name: " + person.getFirstName());
+                System.out.println("Last Name: " + person.getLastName());
+                System.out.println("Email: " + person.getEmail());
+                System.out.println("Gender: " + person.getGender());
+                System.out.println("Team: " + person.getTeam().getTeamName());
+                System.out.println();
+                return; // Exit the method after finding the first matching person
+            }
         }
+
+        // If the loop completes without finding the person
+        System.out.println("Person with last name '" + last_name + "' not found.");
     }
-    
-    // If the loop completes without finding the person
-    System.out.println("Person with last name '" + last_name + "' not found.");
-}
     
     ////////////////////////////////////////////////////////////////////////////
     private int nextId = 1; // Next available ID
@@ -114,18 +115,18 @@ public class Method {
     ////////////////////////////////////////////////////////////////////////////
 
     public void getRandomPerson(List<Person> people) {
-    Random random = new Random();
-    int randomIndex = random.nextInt(people.size());
-    Person randomPerson = people.get(randomIndex);
-    // Print the details of the randomly selected person
-    System.out.println("Random person:");
-    System.out.println("ID: " + randomPerson.getId());
-    System.out.println("First Name: " + randomPerson.getFirstName());
-    System.out.println("Last Name: " + randomPerson.getLastName());
-    System.out.println("Email: " + randomPerson.getEmail());
-    System.out.println("Gender: " + randomPerson.getGender());
-    System.out.println("Team: " + randomPerson.getTeam().getTeamName());
-    System.out.println();
+        Random random = new Random();
+        int randomIndex = random.nextInt(people.size());
+        Person randomPerson = people.get(randomIndex);
+        // Print the details of the randomly selected person
+        System.out.println("Random person:");
+        System.out.println("ID: " + randomPerson.getId());
+        System.out.println("First Name: " + randomPerson.getFirstName());
+        System.out.println("Last Name: " + randomPerson.getLastName());
+        System.out.println("Email: " + randomPerson.getEmail());
+        System.out.println("Gender: " + randomPerson.getGender());
+        System.out.println("Team: " + randomPerson.getTeam().getTeamName());
+        System.out.println();
 }
     
     ////////////////////////////////////////////////////////////////////////////

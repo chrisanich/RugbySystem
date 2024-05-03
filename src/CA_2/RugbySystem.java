@@ -73,7 +73,7 @@ String filename = "Club_Form.txt";
         teams.add(team04);
         
         //We instantiate a variable int count to be able to
-        int count = 0;
+        //int count = 0;
         
         //The next try catch contains a Scanner readFileLines, which stores the
         //information recovered by the FileReader from the text (.txt file)

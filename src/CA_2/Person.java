@@ -63,6 +63,6 @@ public class Person {
     
     public void assignTeam(Team team) {
         this.team = team;
-}
+    }
     
 }
