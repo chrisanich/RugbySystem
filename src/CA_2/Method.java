@@ -97,7 +97,7 @@ String filename = "Club_Form.txt";
                 ArrayList<CoachType> coachTypesList = new ArrayList<>(List.of(CoachType.values()));
                 
                 // Randomly select coach type
-                CoachType randomCoachType = coachTypesList.get(random.nextInt(coachTypesList.size()));
+                CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];  
                 
                 //We randomly assign as player (70%) or coach (30%). This
                 //values were considered because, without being a scholar, 
@@ -141,6 +141,12 @@ String filename = "Club_Form.txt";
             
             //We confirm that the file was read successfully
             System.out.println("\nFile read successfully...\n");
+            
+            
+            
+            
+            
+            
             
         } catch (IOException e) {
             System.out.println("Filename incorrect. Please enter a valid one...");
@@ -297,14 +303,16 @@ String filename = "Club_Form.txt";
             System.out.println("Email: " + person.getEmail());
             System.out.println("Gender: " + person.getGender());
             System.out.println("Team: " + person.getTeam().getTeamName()); // Display the assigned team name
-            
+
             // Add label indicating player or coach
             if (person instanceof Player) {
                 System.out.println("Staff: Player");
             } else if (person instanceof Coach) {
                 System.out.println("Staff: Coach");
+                // Display coach type for coaches
+                System.out.println("Coach Type: " + ((Coach) person).getCoachType());
             }
-        
+
             System.out.println();
             counter++; //Here the counter adds 1 every loop.
         }

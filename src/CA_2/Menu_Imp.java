@@ -25,7 +25,7 @@ public class Menu_Imp {
             System.out.println("1. Sort people alphabetically by first name");
             System.out.println("2. Search people");
             System.out.println("3. Add a person to the list");
-            System.out.println("4. Get a random person from the list");
+            System.out.println("4. Generate a random player");
             System.out.println("5. Exit the program");
         
             while (!scanner.hasNextInt()) {
