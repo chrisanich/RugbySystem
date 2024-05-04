@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Menu_Imp {
     
-    public static void main_menu (Scanner myKB, List<Person> people) {
+    public static void main_menu (Scanner myKB, List<Person> people, List<Team> teams) {
         Scanner scanner = new Scanner(System.in);
         Method method = new Method(); // Create an instance of the Method class
         
@@ -46,11 +46,11 @@ public class Menu_Imp {
                         break;
                     case SEARCH_PERSON:
                         System.out.println("\nPlease enter the first name of the player or coach"
-                                + "you are looking for: ");
+                                + " you are looking for: ");
                         method.searchPeople(people, myKB.nextLine()); // Call the method from the Method class
                         break;
                     case ADD_PERSON:
-                        method.addPerson(people); // Call the method from the Method class
+                        method.addPerson(people, teams); // Call the method from the Method class
                         break;
                     case GET_RANDOM_PERSON:
                         method.getRandomPerson(people); // Call the method from the Method class

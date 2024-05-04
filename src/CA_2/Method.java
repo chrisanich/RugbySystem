@@ -154,7 +154,7 @@ String filename = "Club_Form.txt";
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
         //Execution of the methods
-        menu.main_menu(myKB, people);
+        menu.main_menu(myKB, people, teams);
         
         
         //Finally, we close the user scanner to avoid leak of data
@@ -214,62 +214,152 @@ String filename = "Club_Form.txt";
     ////////////////////////////////////////////////////////////////////////////
     
     public void searchPeople(List<Person> people, String first_name) {
-        for (Person person : people) {
-            if (person.getFirstName().equalsIgnoreCase(first_name)) {
-                // Print the details of the found person
-                System.out.println("Person found:");
-                System.out.println("ID: " + person.getId());
-                System.out.println("First Name: " + person.getFirstName());
-                System.out.println("Last Name: " + person.getLastName());
-                System.out.println("Email: " + person.getEmail());
-                System.out.println("Gender: " + person.getGender());
-                System.out.println();
-                return; // Exit the method after finding the first matching person
+    for (Person person : people) {
+        if (person.getFirstName().equalsIgnoreCase(first_name)) {
+            // Print the details of the found person
+            System.out.println("Person found:");
+            System.out.println("ID: " + person.getId());
+            System.out.println("First Name: " + person.getFirstName());
+            System.out.println("Last Name: " + person.getLastName());
+            System.out.println("Email: " + person.getEmail());
+            System.out.println("Gender: " + person.getGender());
+            // Check if the person is assigned to a team
+            if (person.getTeam() != null) {
+                System.out.println("Team: " + person.getTeam().getTeamName());
             }
+            
+            // Add label indicating player or coach
+            if (person instanceof Player) {
+                System.out.println("Staff: Player");
+            } else if (person instanceof Coach) {
+                System.out.println("Staff: Coach");
+                // Display coach type for coaches
+                System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+            }
+            
+            System.out.println();
+            return; // Exit the method after finding the first matching person
         }
-
-        // If the loop completes without finding the person
-        System.out.println("Person with last name '" + first_name + "' not found.");
     }
+
+    // If the loop completes without finding the person
+    System.out.println("Person with first name '" + first_name + "' not found.");
+}
     
     ////////////////////////////////////////////////////////////////////////////
-    public void addPerson(List<Person> people) {
-        Scanner scanner = new Scanner(System.in);
+    public void addPerson(List<Person> people, List<Team> teams) {
+    Scanner scanner = new Scanner(System.in);
 
-        // Prompt for First Name
-        System.out.println("Enter the First Name of the person:");
-        String first_name = scanner.nextLine();
+    // Prompt for First Name
+    System.out.println("Enter the First Name of the person:");
+    String first_name = scanner.nextLine();
 
-        // Prompt for Last Name
-        System.out.println("Enter the Last Name of the person:");
-        String last_name = scanner.nextLine();
+    // Prompt for Last Name
+    System.out.println("Enter the Last Name of the person:");
+    String last_name = scanner.nextLine();
 
-        // Prompt for Email
-        System.out.println("Enter the Email of the person:");
-        String email = scanner.nextLine();
+    // Prompt for Email
+    System.out.println("Enter the Email of the person:");
+    String email = scanner.nextLine();
 
-        // Prompt for Gender
-        System.out.println("Enter the Gender of the person:");
-        String gender = scanner.nextLine();
+    // Prompt for Gender
+    System.out.println("Enter the Gender of the person:");
+    String gender = scanner.nextLine();
 
-        // Generate ID
-        int id;
-        if (people.isEmpty()) {
-            // If the list is empty, start the ID from 1
-            id = 1;
-        } else {
-            // Otherwise, increment the ID of the last person by 1
-            id = people.get(people.size() - 1).getId() + 1;
+    // Generate ID
+    int id;
+    if (people.isEmpty()) {
+        // If the list is empty, start the ID from 1001
+        id = 1001;
+    } else {
+        // Otherwise, find the maximum ID and increment it by 1
+        int maxId = 0;
+        for (Person person : people) {
+            if (person.getId() > maxId) {
+                maxId = person.getId();
+            }
         }
-
-        // Create a new Person object
-        Person person = new Person(id, first_name, last_name, email, gender);
-
-        // Add the person to the list of people
-        people.add(person);
-
-        System.out.println("Person added successfully.");
+        id = maxId + 1;
     }
+
+    // Prompt for Team selection
+    System.out.println("Select the Team:");
+    for (int i = 0; i < teams.size(); i++) {
+        System.out.println((i + 1) + ". " + teams.get(i).getTeamName());
+    }
+
+    int teamIndex;
+    while (true) {
+        // Ensure the input is an integer
+        while (!scanner.hasNextInt()) {
+            System.out.println("Please enter a valid team number!");
+            scanner.next(); // Consume the invalid input
+        }
+        teamIndex = scanner.nextInt();
+
+        // Check if the input is within the valid range
+        if (teamIndex >= 1 && teamIndex <= teams.size()) {
+            break; // Valid input, exit the loop
+        } else {
+            System.out.println("Please enter a valid team number!");
+        }
+    }
+
+    Team selectedTeam = teams.get(teamIndex - 1);
+
+    // Prompt for Staff selection
+    System.out.println("Select the kind of staff:");
+    System.out.println("1. Player");
+    System.out.println("2. Coach");
+    int staffChoice = scanner.nextInt();
+    if (staffChoice == 1) {
+        // If Player
+        Player player = new Player(id, first_name, last_name, email, gender);
+        player.assignTeam(selectedTeam);
+        people.add(player);
+        System.out.println("Player added successfully.");
+    } else if (staffChoice == 2) {
+        // If Coach
+        System.out.println("Select the type of Coach:");
+        System.out.println("1. Head Coach");
+        System.out.println("2. Assistant Coach");
+        System.out.println("3. Scrum Coach");
+        int coachTypeChoice = scanner.nextInt();
+        CoachType coachType = null;
+        switch (coachTypeChoice) {
+            case 1:
+                coachType = CoachType.HEAD_COACH;
+                break;
+            case 2:
+                coachType = CoachType.ASSISTANT_COACH;
+                break;
+            case 3:
+                coachType = CoachType.SCRUM_COACH;
+                break;
+            default:
+                System.out.println("Invalid choice, setting to Assistant Coach.");
+                coachType = CoachType.ASSISTANT_COACH;
+                break;
+        }
+        Person person = new Coach(id, first_name, last_name, email, gender, coachType);
+        person.assignTeam(selectedTeam);
+        people.add(person);
+        System.out.println("Coach added successfully.");
+    } else {
+        System.out.println("Invalid choice.");
+    }
+}
+
+    // Helper method to generate a new ID for the person
+    private int getNewId(List<Person> people) {
+        // If the list is empty, start the ID from 1
+        if (people.isEmpty()) {
+            return 1;
+        }
+        // Otherwise, increment the ID of the last person by 1
+        return people.get(people.size() - 1).getId() + 1;
+    }
+
     
     ////////////////////////////////////////////////////////////////////////////
 
@@ -286,7 +376,7 @@ String filename = "Club_Form.txt";
         System.out.println("Gender: " + randomPerson.getGender());
         System.out.println("Team: " + randomPerson.getTeam().getTeamName());
         System.out.println();
-}
+    }
     
     ////////////////////////////////////////////////////////////////////////////
 

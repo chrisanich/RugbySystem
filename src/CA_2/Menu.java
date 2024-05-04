@@ -39,7 +39,7 @@ public interface Menu {
     public enum CoachType {
         HEAD_COACH("Head Coach"),
         ASSISTANT_COACH("Assistant Coach"),
-        CONDITIONING_COACH("Conditioning Coach");
+        SCRUM_COACH("Scrum Coach");
 
         private final String displayName;
 
