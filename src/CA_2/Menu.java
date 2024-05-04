@@ -35,4 +35,10 @@ public interface Menu {
     //This method will provide the user with a random person data
     void getRandomPerson();
     
+    // Define the CoachType enum
+    public enum CoachType {
+        HEAD_COACH,
+        ASSISTANT_COACH,
+        SCRUM_COACH
+    }
 }

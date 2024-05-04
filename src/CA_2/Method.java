@@ -42,7 +42,7 @@ public class Method {
 String filename = "Club_Form.txt";
         
         //Now, we create an array list wich will store every Person (Class).
-        //This will help us organise every line of data of 2our file in a
+        //This will help us organise every line of data of our file in a
         //different index of the list.
         List<Person> people = new ArrayList<>();
         
@@ -90,16 +90,31 @@ String filename = "Club_Form.txt";
                 String last_name = parts[2];
                 String email = parts[3];
                 String gender = parts[4];
-                //Here, we create a new Person class element and...
+                //Here, we create a new Person class instance, which at the same
+                //type has a constructor that takes the parameters id, first_name, 
+                //last_name, email and gender.
+                //Therefore, this line initialises a new Person object with
+                //the before-mentioned paramenters.
                 Person person = new Person(id, first_name, last_name, email, gender);
                 
-                // Randomly assign a team to the person
+                //We create a new instansce of the Random class and call it
+                //"random". With this we can get a random number.
                 Random random = new Random();
+                //"random.nextInt(teams.size())" takes the size of teams, that in
+                //this case is 4 (4 created teams) and through the random
+                //instance, gets a random number between 0 (inclusive) and the
+                //size of "teams", which in this case is 4.
+                //Afterwards, "teams.get(random.nextInt(teams.size()))" gets
+                //the team at the randomly generated index from the list and
+                //stores it as a Team intance called randomTeam.
                 Team randomTeam = teams.get(random.nextInt(teams.size()));
+                //Next, this randomTeam variable (which, by the way, is a class
+                //in the program) is taken as an argument of the assignTeam
+                //method hosted on the Person class code.
                 person.assignTeam(randomTeam);
                 
                 
-                //we store it on the people list (ArrayList)
+                //And finally, we add this "person" to the people array list.
                 people.add(person);
             }
             
@@ -205,29 +220,41 @@ String filename = "Club_Form.txt";
     ////////////////////////////////////////////////////////////////////////////
     private int nextId = 1; // Next available ID
     public void addPerson(List<Person> people) {
-        Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
 
-        // Prompt for First Name
-        System.out.println("Enter the First Name of the person:");
-        String firstName = scanner.nextLine();
+    // Prompt for First Name
+    System.out.println("Enter the First Name of the person:");
+    String first_name = scanner.nextLine();
 
-        // Prompt for Last Name
-        System.out.println("Enter the Last Name of the person:");
-        String lastName = scanner.nextLine();
+    // Prompt for Last Name
+    System.out.println("Enter the Last Name of the person:");
+    String last_name = scanner.nextLine();
 
-        // Prompt for Email
-        System.out.println("Enter the Email of the person:");
-        String email = scanner.nextLine();
+    // Prompt for Email
+    System.out.println("Enter the Email of the person:");
+    String email = scanner.nextLine();
 
-        // Prompt for Gender
-        System.out.println("Enter the Gender of the person:");
-        String gender = scanner.nextLine();
+    // Prompt for Gender
+    System.out.println("Enter the Gender of the person:");
+    String gender = scanner.nextLine();
 
-        // Generate ID
-        int id = nextId++;
+    // Generate ID
+    int id;
+    if (people.isEmpty()) {
+        // If the list is empty, start the ID from 1
+        id = 1;
+    } else {
+        // Otherwise, increment the ID of the last person by 1
+        id = people.get(people.size() - 1).getId() + 1;
+    }
 
-        // Create and add the person to the list
-        people.add(new Person(id, firstName, lastName, email, gender));
+    // Create a new Person object
+    Person person = new Person(id, first_name, last_name, email, gender);
+
+    // Add the person to the list of people
+    people.add(person);
+
+    System.out.println("Person added successfully.");
     }
     
     ////////////////////////////////////////////////////////////////////////////
