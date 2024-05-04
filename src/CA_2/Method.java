@@ -1,6 +1,7 @@
 package CA_2;
 
 
+import CA_2.Menu.CoachType;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -59,8 +60,6 @@ String filename = "Club_Form.txt";
         teams.add(team03);
         teams.add(team04);
         
-        //We instantiate a variable int count to be able to
-        //int count = 0;
         
         //The next try catch contains a Scanner readFileLines, which stores the
         //information recovered by the FileReader from the text (.txt file)
@@ -90,16 +89,38 @@ String filename = "Club_Form.txt";
                 String last_name = parts[2];
                 String email = parts[3];
                 String gender = parts[4];
-                //Here, we create a new Person class instance, which at the same
-                //type has a constructor that takes the parameters id, first_name, 
-                //last_name, email and gender.
-                //Therefore, this line initialises a new Person object with
-                //the before-mentioned paramenters.
-                Person person = new Person(id, first_name, last_name, email, gender);
-                
                 //We create a new instansce of the Random class and call it
                 //"random". With this we can get a random number.
                 Random random = new Random();
+                
+                // Convert CoachType enum values to ArrayList
+                ArrayList<CoachType> coachTypesList = new ArrayList<>(List.of(CoachType.values()));
+                
+                // Randomly select coach type
+                CoachType randomCoachType = coachTypesList.get(random.nextInt(coachTypesList.size()));
+                
+                //We randomly assign as player (70%) or coach (30%). This
+                //values were considered because, without being a scholar, 
+                //I understand that there are always more
+                //players than coaches.
+                boolean isPlayer = random.nextDouble() < 0.7;
+                //Here, we create a new Person class instance called "person",
+                //which we initialise below, inside the if statement.
+                Person person;
+                //Inside this if condition we determine if the person of the
+                //loop belongs to the Player or Coach class.
+                //Whether the person created belogs to Player or Coach class
+                //person has a constructor that takes the parameters id, first_name, 
+                //last_name, email and gender.
+                //Therefore, this line initialises a new Person object with
+                //the before-mentioned paramenters.
+                if (isPlayer) {
+                    person = new Player(id, first_name, last_name, email, gender);
+                } else {
+                    person = new Coach(id, first_name, last_name, email, gender, randomCoachType);
+                }
+
+
                 //"random.nextInt(teams.size())" takes the size of teams, that in
                 //this case is 4 (4 created teams) and through the random
                 //instance, gets a random number between 0 (inclusive) and the
@@ -123,21 +144,7 @@ String filename = "Club_Form.txt";
             
         } catch (IOException e) {
             System.out.println("Filename incorrect. Please enter a valid one...");
-        }
-        
-        //Let's print the contents of the 'people' array list
-        /*
-        for (Person person : people) {
-            System.out.println("ID: " + person.getId());
-            System.out.println("First Name: " + person.getFirstName());
-            System.out.println("Last Name: " + person.getLastName());
-            System.out.println("Email: " + person.getEmail());
-            System.out.println("Gender: " + person.getGender());
-            System.out.println("Team: " + person.getTeam().getTeamName()); //Display the assigned team name
-            System.out.println();
-        }
-        */
-        
+        }   
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
         //Execution of the methods
@@ -147,6 +154,8 @@ String filename = "Club_Form.txt";
         //Finally, we close the user scanner to avoid leak of data
         myKB.close();
     }
+    
+    ////////////////////////////////////////////////////////////////////////////
     
     public void sortPeople(List<Person> people, int left, int right) {
         if (left < right) {
@@ -169,7 +178,7 @@ String filename = "Club_Form.txt";
 
         while (i <= mid && j <= right) {
             // Compare the last names of Person objects
-            if (people.get(i).getLastName().compareToIgnoreCase(people.get(j).getLastName()) <= 0) {
+            if (people.get(i).getFirstName().compareToIgnoreCase(people.get(j).getFirstName()) <= 0) {
                 temp.add(people.get(i));
                 i++;
             } else {
@@ -198,9 +207,9 @@ String filename = "Club_Form.txt";
     
     ////////////////////////////////////////////////////////////////////////////
     
-    public void searchPeople(List<Person> people, String last_name) {
+    public void searchPeople(List<Person> people, String first_name) {
         for (Person person : people) {
-            if (person.getLastName().equalsIgnoreCase(last_name)) {
+            if (person.getFirstName().equalsIgnoreCase(first_name)) {
                 // Print the details of the found person
                 System.out.println("Person found:");
                 System.out.println("ID: " + person.getId());
@@ -214,47 +223,46 @@ String filename = "Club_Form.txt";
         }
 
         // If the loop completes without finding the person
-        System.out.println("Person with last name '" + last_name + "' not found.");
+        System.out.println("Person with last name '" + first_name + "' not found.");
     }
     
     ////////////////////////////////////////////////////////////////////////////
-    private int nextId = 1; // Next available ID
     public void addPerson(List<Person> people) {
-    Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-    // Prompt for First Name
-    System.out.println("Enter the First Name of the person:");
-    String first_name = scanner.nextLine();
+        // Prompt for First Name
+        System.out.println("Enter the First Name of the person:");
+        String first_name = scanner.nextLine();
 
-    // Prompt for Last Name
-    System.out.println("Enter the Last Name of the person:");
-    String last_name = scanner.nextLine();
+        // Prompt for Last Name
+        System.out.println("Enter the Last Name of the person:");
+        String last_name = scanner.nextLine();
 
-    // Prompt for Email
-    System.out.println("Enter the Email of the person:");
-    String email = scanner.nextLine();
+        // Prompt for Email
+        System.out.println("Enter the Email of the person:");
+        String email = scanner.nextLine();
 
-    // Prompt for Gender
-    System.out.println("Enter the Gender of the person:");
-    String gender = scanner.nextLine();
+        // Prompt for Gender
+        System.out.println("Enter the Gender of the person:");
+        String gender = scanner.nextLine();
 
-    // Generate ID
-    int id;
-    if (people.isEmpty()) {
-        // If the list is empty, start the ID from 1
-        id = 1;
-    } else {
-        // Otherwise, increment the ID of the last person by 1
-        id = people.get(people.size() - 1).getId() + 1;
-    }
+        // Generate ID
+        int id;
+        if (people.isEmpty()) {
+            // If the list is empty, start the ID from 1
+            id = 1;
+        } else {
+            // Otherwise, increment the ID of the last person by 1
+            id = people.get(people.size() - 1).getId() + 1;
+        }
 
-    // Create a new Person object
-    Person person = new Person(id, first_name, last_name, email, gender);
+        // Create a new Person object
+        Person person = new Person(id, first_name, last_name, email, gender);
 
-    // Add the person to the list of people
-    people.add(person);
+        // Add the person to the list of people
+        people.add(person);
 
-    System.out.println("Person added successfully.");
+        System.out.println("Person added successfully.");
     }
     
     ////////////////////////////////////////////////////////////////////////////
@@ -289,6 +297,14 @@ String filename = "Club_Form.txt";
             System.out.println("Email: " + person.getEmail());
             System.out.println("Gender: " + person.getGender());
             System.out.println("Team: " + person.getTeam().getTeamName()); // Display the assigned team name
+            
+            // Add label indicating player or coach
+            if (person instanceof Player) {
+                System.out.println("Staff: Player");
+            } else if (person instanceof Coach) {
+                System.out.println("Staff: Coach");
+            }
+        
             System.out.println();
             counter++; //Here the counter adds 1 every loop.
         }

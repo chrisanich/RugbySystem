@@ -1,23 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CA_2;
+
+import CA_2.Menu.CoachType;
 
 /**
  *
  * @author chrisanich
  */
-    public class Coach extends Person {
+public class Coach extends Person {
     private Team assignedTeam;
-    
-    public Coach(int id, String first_name, String last_name, String email, String gender, Team team) {
+    //We create attributes to give the coaches a different type
+    private String coach_type;
+
+    public Coach(int id, String first_name, String last_name, String email, String gender, CoachType coachType) {
         super(id, first_name, last_name, email, gender);
-        this.assignedTeam = team;
+        this.coach_type = coach_type;
+
     }
     
-    public void assignTeam(Team team) {
-        this.assignedTeam = team;
+    // Getter and setter for coaching style
+    public String getCoachType() {
+        return coach_type;
+    }
+
+    public void setCoachType(String coachingStyle) {
+        this.coach_type = coach_type;
     }
 }
 

@@ -35,10 +35,22 @@ public interface Menu {
     //This method will provide the user with a random person data
     void getRandomPerson();
     
-    // Define the CoachType enum
+    //Define the CoachType enum
     public enum CoachType {
-        HEAD_COACH,
-        ASSISTANT_COACH,
-        SCRUM_COACH
+        HEAD_COACH("Head Coach"),
+        ASSISTANT_COACH("Assistant Coach"),
+        CONDITIONING_COACH("Conditioning Coach");
+
+        private final String displayName;
+
+        CoachType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
     }
+
 }

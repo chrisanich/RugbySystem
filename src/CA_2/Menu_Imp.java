@@ -22,7 +22,7 @@ public class Menu_Imp {
             System.out.println("*****MAIN MENU*****");
             System.out.println("-------------------");
             System.out.println("Please Select an option: ");
-            System.out.println("1. Sort people alphabetically by last name");
+            System.out.println("1. Sort people alphabetically by first name");
             System.out.println("2. Search people");
             System.out.println("3. Add a person to the list");
             System.out.println("4. Get a random person from the list");
@@ -45,7 +45,7 @@ public class Menu_Imp {
                         method.printList(people);
                         break;
                     case SEARCH_PERSON:
-                        System.out.println("\nPlease enter the last name of the player or coach"
+                        System.out.println("\nPlease enter the first name of the player or coach"
                                 + "you are looking for: ");
                         method.searchPeople(people, myKB.nextLine()); // Call the method from the Method class
                         break;
