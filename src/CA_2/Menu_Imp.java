@@ -7,8 +7,12 @@ import java.util.Scanner;
 import java.util.List;
 
 /**
- *
- * @author chrisanich
+ * CA_2: Rugby Club System: Second assignment for the subject of Algorithms and 
+ * Constructs of the Higher Diploma in Science in Computing of CCT College
+ * Dublin, Ireland.
+ * Lecturer: Kayoum Khbuli
+ * @author Christopher Anich (Student number: 2023202)
+ * 12-05-2024
  */
 public class Menu_Imp {
     
