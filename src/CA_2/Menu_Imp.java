@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Menu_Imp {
     
-    public static void main_menu (Scanner myKB, List<Person> people, List<Team> teams) {
+    public static void main_menu (Scanner myKB, List<Person> people, List<Team> teams, String filename) {
         Scanner scanner = new Scanner(System.in);
         Method method = new Method(); // Create an instance of the Method class
         
@@ -53,7 +53,7 @@ public class Menu_Imp {
                         method.addPerson(people, teams); // Call the method from the Method class
                         break;
                     case GET_RANDOM_PERSON:
-                        method.getRandomPerson(people); // Call the method from the Method class
+                        method.getRandomPerson(people, teams, filename); // Call the method from the Method class
                         break;
                     case EXIT:
                         System.out.println("Exiting Program..");
