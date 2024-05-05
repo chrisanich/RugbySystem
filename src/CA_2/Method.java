@@ -338,7 +338,22 @@ String filename = "Club_Form.txt";
         System.out.println("Select the kind of staff:");
         System.out.println("1. Player");
         System.out.println("2. Coach");
-        int staffChoice = scanner.nextInt();
+        int staffChoice;
+        while (true) {
+            // Ensure the input is an integer
+            while (!scanner.hasNextInt()) {
+                System.out.println("Please enter a valid choice!");
+                scanner.next(); // Consume the invalid input
+            }
+            staffChoice = scanner.nextInt();
+
+            // Check if the input is within the valid range
+            if (staffChoice == 1 || staffChoice == 2) {
+                break; // Valid input, exit the loop
+            } else {
+                System.out.println("Please enter a valid choice!");
+            }
+        }
         if (staffChoice == 1) {
             // If Player
             System.out.println("Select the type of Player:");
@@ -373,7 +388,7 @@ String filename = "Club_Form.txt";
             Person person = new Player(id, first_name, last_name, email, gender, playerType);
             person.assignTeam(selectedTeam);
             people.add(person);
-            System.out.println("Player added successfully.");
+            System.out.println(first_name + " " + last_name + " has been added as \"" + playerType + "\" to " + "\"" + selectedTeam.getTeamName() + "\" successfully.");
             // Display coach information
             displayPersonInformation(person);
         } else if (staffChoice == 2) {
@@ -412,7 +427,7 @@ String filename = "Club_Form.txt";
             Person person = new Coach(id, first_name, last_name, email, gender, coachType);
             person.assignTeam(selectedTeam);
             people.add(person);
-            System.out.println("Coach added successfully.");
+            System.out.println(first_name + " " + last_name + " has been added as \"" + coachType + "\" to " + "\"" + selectedTeam.getTeamName() + "\" successfully.");
             // Display coach information
             displayPersonInformation(person);
         } else {

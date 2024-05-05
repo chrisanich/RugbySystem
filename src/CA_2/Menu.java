@@ -39,7 +39,9 @@ public interface Menu {
     //This method will provide the user with a random person data
     void getRandomPerson();
     
-    //Define the CoachType enum
+    //This enum is to list all the different types of coach. We add the
+    //parentheses to display the option in a more appealing and human way.
+    //It is better "Head Coach" than "HEAD_COACH" on the displayed menu.
     public enum CoachType {
         HEAD_COACH("Head Coach"),
         ASSISTANT_COACH("Assistant Coach"),
@@ -59,6 +61,9 @@ public interface Menu {
         }
     }
     
+    //This enum is to list all the different types of player. We add the
+    //parentheses to display the option in a more appealing and human way.
+    //It is better "The 8-Man" than "THE_8_MAN" on the displayed menu.
     public enum PlayerType {
         PROMP("Promp"),
         HOOKER("Hooker"),
