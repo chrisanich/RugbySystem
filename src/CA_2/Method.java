@@ -2,12 +2,19 @@ package CA_2;
 
 
 import CA_2.Menu.CoachType;
+import CA_2.Menu.PlayerType;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+//We import the Function interface from the util.fuction package. This allows
+//us to use the apply() method. This, that will be explained later, is to be
+//able to get an especific attribute from a Person, that the reason of
+//Function<Person, String> attributeGetter to get random attributes for the
+//"Generate Random People with Coach Types and Teams" option of the
+//program.
 import java.util.function.Function;
 
 /**
@@ -15,6 +22,8 @@ import java.util.function.Function;
  * @author chrisanich
  */
 public class Method {
+
+    private PlayerType randomPlayerType;
     
     ////////////////////////////////////////////////////////////////////////////
 
@@ -98,7 +107,12 @@ String filename = "Club_Form.txt";
                 ArrayList<CoachType> coachTypesList = new ArrayList<>(List.of(CoachType.values()));
                 
                 // Randomly select coach type
-                CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];  
+                CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];
+                // Convert CoachType enum values to ArrayList
+
+                
+                // Randomly select coach type
+                PlayerType randomPlayerType = PlayerType.values()[random.nextInt(PlayerType.values().length)]; 
                 
                 //We randomly assign as player (70%) or coach (30%). This
                 //values were considered because, without being a scholar, 
@@ -116,7 +130,7 @@ String filename = "Club_Form.txt";
                 //Therefore, this line initialises a new Person object with
                 //the before-mentioned paramenters.
                 if (isPlayer) {
-                    person = new Player(id, first_name, last_name, email, gender);
+                    person = new Player(id, first_name, last_name, email, gender, randomPlayerType);
                 } else {
                     person = new Coach(id, first_name, last_name, email, gender, randomCoachType);
                 }
@@ -141,13 +155,7 @@ String filename = "Club_Form.txt";
             }
             
             //We confirm that the file was read successfully
-            System.out.println("\nFile read successfully...\n");
-            
-            
-            
-            
-            
-            
+            System.out.println("\nFile read successfully...\n"); 
             
         } catch (IOException e) {
             System.out.println("Filename incorrect. Please enter a valid one...");
@@ -212,8 +220,8 @@ String filename = "Club_Form.txt";
         }
     }
     
-    ////////////////////////////////////////////////////////////////////////////
     
+    ////////////////////////////////////////////////////////////////////////////
     public void searchPeople(List<Person> people, String first_name) {
         boolean found = false;
         for (Person person : people) {
@@ -236,6 +244,8 @@ String filename = "Club_Form.txt";
                 // Add label indicating player or coach
                 if (person instanceof Player) {
                     System.out.println("Staff: Player");
+                    // Display player type for players
+                    System.out.println("Player Type: " + ((Player) person).getPlayerType());
                 } else if (person instanceof Coach) {
                     System.out.println("Staff: Coach");
                     // Display coach type for coaches
@@ -266,8 +276,16 @@ String filename = "Club_Form.txt";
         String last_name = scanner.nextLine();
 
         // Prompt for Email
-        System.out.println("Enter the Email of the person:");
-        String email = scanner.nextLine();
+        String email;
+        while (true) {
+            System.out.println("Enter the Email of the person:");
+            email = scanner.nextLine();
+            if (isValidEmail(email)) {
+                break;
+            } else {
+                System.out.println("Invalid email format. Please try again.");
+            }
+        }
 
         // Prompt for Gender
         System.out.println("Enter the Gender of the person:");
@@ -321,17 +339,52 @@ String filename = "Club_Form.txt";
         int staffChoice = scanner.nextInt();
         if (staffChoice == 1) {
             // If Player
-            Player player = new Player(id, first_name, last_name, email, gender);
-            player.assignTeam(selectedTeam);
-            people.add(player);
+            System.out.println("Select the type of Player:");
+            System.out.println("1. Promp");
+            System.out.println("2. Hooker");
+            System.out.println("3. Flanker");
+            System.out.println("4. The 8-Man");
+            System.out.println("5. Fullback");
+            int playerTypeChoice = scanner.nextInt();
+            PlayerType playerType = null;
+            switch (playerTypeChoice) {
+                case 1:
+                    playerType = PlayerType.PROMP;
+                    break;
+                case 2:
+                    playerType = PlayerType.HOOKER;
+                    break;
+                case 3:
+                    playerType = PlayerType.FLANKER;
+                    
+                case 4:
+                    playerType = PlayerType.THE_8_MAN;
+                    break;
+                case 5:
+                    playerType = PlayerType.FULLBACK;
+                    break;
+                default:
+                    System.out.println("Invalid choice, setting to Hooker.");
+                    playerType = PlayerType.HOOKER;
+                    break;
+            }
+            Person person = new Player(id, first_name, last_name, email, gender, playerType);
+            person.assignTeam(selectedTeam);
+            people.add(person);
             System.out.println("Player added successfully.");
+            // Display coach information
+            displayPersonInformation(person);
         } else if (staffChoice == 2) {
             // If Coach
             System.out.println("Select the type of Coach:");
             System.out.println("1. Head Coach");
             System.out.println("2. Assistant Coach");
-            System.out.println("3. Scrum Coach");
+            System.out.println("3. Assistant Forwards Coach");
+            System.out.println("4. Academy Fordwards Coach");
+            System.out.println("5. Scrum Coach");
             int coachTypeChoice = scanner.nextInt();
+            
+            ////////////////////////////////////////////////////////////////////
             CoachType coachType = null;
             switch (coachTypeChoice) {
                 case 1:
@@ -341,6 +394,12 @@ String filename = "Club_Form.txt";
                     coachType = CoachType.ASSISTANT_COACH;
                     break;
                 case 3:
+                    coachType = CoachType.ASSISTANT_FORWARDS_COACH;
+                    
+                case 4:
+                    coachType = CoachType.ACADEMY_FORWARDS_COACH;
+                    break;
+                case 5:
                     coachType = CoachType.SCRUM_COACH;
                     break;
                 default:
@@ -352,89 +411,111 @@ String filename = "Club_Form.txt";
             person.assignTeam(selectedTeam);
             people.add(person);
             System.out.println("Coach added successfully.");
+            // Display coach information
+            displayPersonInformation(person);
         } else {
             System.out.println("Invalid choice.");
         }
     }
 
-    // Helper method to generate a new ID for the person
-    private int getNewId(List<Person> people) {
-        // If the list is empty, start the ID from 1
-        if (people.isEmpty()) {
-            return 1;
+    // Helper method to display person information
+    private void displayPersonInformation(Person person) {
+        System.out.println("ID: " + person.getId());
+        System.out.println("First Name: " + person.getFirstName());
+        System.out.println("Last Name: " + person.getLastName());
+        System.out.println("Email: " + person.getEmail());
+        System.out.println("Gender: " + person.getGender());
+        System.out.println("Team: " + person.getTeam().getTeamName());
+        if (person instanceof Player) {
+            System.out.println("Staff: Player");
+            // Display player type for players
+            System.out.println("Player Type: " + ((Player) person).getPlayerType());
+        } else if (person instanceof Coach) {
+            System.out.println("Staff: Coach");
+            // Display coach type for coaches
+            System.out.println("Coach Type: " + ((Coach) person).getCoachType());
         }
-        // Otherwise, increment the ID of the last person by 1
-        return people.get(people.size() - 1).getId() + 1;
+        System.out.println();
     }
 
-    
-    ////////////////////////////////////////////////////////////////////////////
-
-public void getRandomPerson(List<Person> people, List<Team> teams, String filename) {
-    Random random = new Random();
-
-    // Ensure there's at least one person to add
-    if (people.isEmpty()) {
-        System.out.println("The list is empty. Please add some people before generating a random person.");
-        return;
+    // Helper method to validate email format
+    private boolean isValidEmail(String email) {
+        // Email format pattern with dot after '@'
+        String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
+        // Check if the email matches the pattern
+        return email.matches(emailPattern);
     }
 
-    // Get a random person from the existing list
-    Person randomPerson = people.get(random.nextInt(people.size()));
+////////////////////////////////////////////////////////////////////////////////
 
-    // Generate a new ID for the new person
-    int newId = people.stream().mapToInt(Person::getId).max().orElse(0) + 1;
+    public void getRandomPerson(List<Person> people, List<Team> teams, String filename) {
+        Random random = new Random();
 
-    // Randomly select attributes from existing people
-    String firstName = getRandomAttribute(people, Person::getFirstName);
-    String lastName = getRandomAttribute(people, Person::getLastName);
-    String email = getRandomAttribute(people, Person::getEmail);
-    String gender = getRandomAttribute(people, Person::getGender);
+        // Ensure there's at least one person to add
+        if (people.isEmpty()) {
+            System.out.println("The list is empty. Please add some people before generating a random person.");
+            return;
+        }
 
-    // Generate random coach type for coaches
-    CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];
+        // Get a random person from the existing list
+        Person randomPerson = people.get(random.nextInt(people.size()));
 
-    // Create the individual
-    Person person;
-    boolean isPlayer = random.nextDouble() < 0.7; // 70% chance of being a player
-    if (isPlayer) {
-        person = new Player(newId, firstName, lastName, email, gender);
-    } else {
-        person = new Coach(newId, firstName, lastName, email, gender, randomCoachType);
+        // Generate a new ID for the new person
+        int newId = people.stream().mapToInt(Person::getId).max().orElse(0) + 1;
+
+        // Randomly select attributes from existing people
+        String firstName = getRandomAttribute(people, Person::getFirstName);
+        String lastName = getRandomAttribute(people, Person::getLastName);
+        String email = getRandomAttribute(people, Person::getEmail);
+        String gender = getRandomAttribute(people, Person::getGender);
+
+        // Generate random coach type for coaches
+        CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];
+
+        // Create the individual
+        Person person;
+        boolean isPlayer = random.nextDouble() < 0.7; // 70% chance of being a player
+        if (isPlayer) {
+            PlayerType randomPlayerType = PlayerType.values()[random.nextInt(PlayerType.values().length)]; // Generate random player type
+            person = new Player(newId, firstName, lastName, email, gender, randomPlayerType); // Set the random player type
+        } else {
+            person = new Coach(newId, firstName, lastName, email, gender, randomCoachType);
+        }
+
+        // Assign the individual to a random team
+        Team randomTeam = teams.get(random.nextInt(teams.size()));
+        person.assignTeam(randomTeam);
+
+        // Add the individual to the list of people
+        people.add(person);
+
+        // Print the information of the newly added person
+        System.out.println("New person added:");
+        System.out.println("ID: " + person.getId());
+        System.out.println("First Name: " + person.getFirstName());
+        System.out.println("Last Name: " + person.getLastName());
+        System.out.println("Email: " + person.getEmail());
+        System.out.println("Gender: " + person.getGender());
+        System.out.println("Team: " + person.getTeam().getTeamName());
+        if (person instanceof Player) {
+            System.out.println("Staff: Player");
+            // Display player type for players
+            System.out.println("Player Type: " + ((Player) person).getPlayerType());
+        } else if (person instanceof Coach) {
+            System.out.println("Staff: Coach");
+            System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+        }
+        System.out.println();
     }
 
-    // Assign the individual to a random team
-    Team randomTeam = teams.get(random.nextInt(teams.size()));
-    person.assignTeam(randomTeam);
-
-    // Add the individual to the list of people
-    people.add(person);
-
-    // Print the information of the newly added person
-    System.out.println("New person added:");
-    System.out.println("ID: " + person.getId());
-    System.out.println("First Name: " + person.getFirstName());
-    System.out.println("Last Name: " + person.getLastName());
-    System.out.println("Email: " + person.getEmail());
-    System.out.println("Gender: " + person.getGender());
-    System.out.println("Team: " + person.getTeam().getTeamName());
-    if (person instanceof Player) {
-        System.out.println("Staff: Player");
-    } else if (person instanceof Coach) {
-        System.out.println("Staff: Coach");
-        System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+    // Helper method to get a random attribute from existing people
+    private String getRandomAttribute(List<Person> people, Function<Person, String> attributeGetter) {
+        Random random = new Random();
+        // Get a random person from the list
+        Person randomPerson = people.get(random.nextInt(people.size()));
+        // Get the specified attribute from the random person
+        return attributeGetter.apply(randomPerson);
     }
-    System.out.println();
-}
-
-// Helper method to get a random attribute from existing people
-private String getRandomAttribute(List<Person> people, Function<Person, String> attributeGetter) {
-    Random random = new Random();
-    // Get a random person from the list
-    Person randomPerson = people.get(random.nextInt(people.size()));
-    // Get the specified attribute from the random person
-    return attributeGetter.apply(randomPerson);
-}
 
 
     ////////////////////////////////////////////////////////////////////////////
@@ -456,6 +537,8 @@ private String getRandomAttribute(List<Person> people, Function<Person, String> 
             // Add label indicating player or coach
             if (person instanceof Player) {
                 System.out.println("Staff: Player");
+                // Display player type for players
+                System.out.println("Player Type: " + ((Player) person).getPlayerType());
             } else if (person instanceof Coach) {
                 System.out.println("Staff: Coach");
                 // Display coach type for coaches

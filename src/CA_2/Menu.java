@@ -39,6 +39,8 @@ public interface Menu {
     public enum CoachType {
         HEAD_COACH("Head Coach"),
         ASSISTANT_COACH("Assistant Coach"),
+        ASSISTANT_FORWARDS_COACH("Assistant Forwards Coach"),
+        ACADEMY_FORWARDS_COACH("Academy Fordwards Coach"),
         SCRUM_COACH("Scrum Coach");
 
         private final String displayName;
@@ -52,5 +54,25 @@ public interface Menu {
             return displayName;
         }
     }
+    
+    public enum PlayerType {
+        PROMP("Promp"),
+        HOOKER("Hooker"),
+        FLANKER("Flanker"),
+        THE_8_MAN("The 8-Man"),
+        FULLBACK("Fullback");
+
+        private final String displayName;
+
+        PlayerType(String displayName) {
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
+        }
+    }
+
 
 }

@@ -1,16 +1,27 @@
 package CA_2;
 
+import CA_2.Menu.PlayerType;
+
 /**
  *
  * @author chrisanich
  */
 public class Player extends Person {
     private Team assignedTeam;
+    //We create attributes to give the coaches a different type
+    private PlayerType playerType; // Change the type to CoachType enum
 
-    public Player(int id, String first_name, String last_name, String email, String gender) {
+    public Player(int id, String first_name, String last_name, String email, String gender, PlayerType playerType) {
         super(id, first_name, last_name, email, gender);
-
+        this.playerType = playerType; // Assign the coach type passed from the constructor
+    }
+    
+    // Getter and setter for coaching style
+    public PlayerType getPlayerType() {
+        return playerType;
     }
 
+    public void setPlayerType(PlayerType playerType) {
+        this.playerType = playerType;
+    }
 }
-
