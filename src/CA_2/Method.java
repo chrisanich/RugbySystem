@@ -237,18 +237,27 @@ String filename = "Club_Form.txt";
         //halves of the sublist
         while (i <= mid && j <= right) {
             //At this line, we get the people at index "i", that is the one to
-            //the most left of the sublist, we get its first name, wich comes
-            //from the getFirst list of the Person class, we igonore case and
+            //the most left of the sublist. We get its first name, wich comes
+            //from the getFirst list of the Person class. We igonore case and
             //compare it with the first name of the person on "people" at index
             //"j" (look at the parenthesis at the right).
             //"0 >" checks if the comparison result is less than "0", indicating 
             //that the first name of the person at index "i" precedes the 1st 
             //name of the person at index "j" alphabetically.
+            //If the condition is true, the Person object at index i from 
+            //the left sublist is added to the temp list, and the i pointer 
+            //is incremented.
             if (0 > people.get(i).getFirstName().compareToIgnoreCase(people.get(j).getFirstName())) {
-                //
                 temp.add(people.get(i));
                 i++;
+            //If the condition is false (meaning the first name of the person at 
+            //index j comes before or is equal to the first name of the person 
+            //at index i alphabetically), the Person object at index j from the 
+            //right sublist is added to the temp list, and the j pointer is 
+            //incremented.
             } else {
+                //This loop adds any remaining elements from the right half of 
+                //the sublist to the temp list.
                 temp.add(people.get(j));
                 j++;
             }
@@ -260,13 +269,16 @@ String filename = "Club_Form.txt";
             i++;
         }
 
-        // Add remaining elements from the right half
+        //This loop adds any remaining elements from the left half of the 
+        //sublist to the temp list.
         while (j <= right) {
             temp.add(people.get(j));
             j++;
         }
 
-        // Copy sorted elements back to the original List
+        //Let's copy sorted elements back to the original list. This loop adds 
+        //any remaining elements from the right half of the sublist to the 
+        //temp list.
         for (int k = 0; k < temp.size(); k++) {
             people.set(left + k, temp.get(k));
         }
