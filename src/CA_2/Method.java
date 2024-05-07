@@ -415,24 +415,35 @@ String filename = "Club_Form.txt";
             id = maxId + 1;
         }
 
-        // Prompt for Team selection
+        //In the next lines we ask the user to select a team from the 
+        //list and display this one along with their 
+        //indices.
         System.out.println("Select the Team:");
         for (int i = 0; i < teams.size(); i++) {
             System.out.println((i + 1) + ". " + teams.get(i).getTeamName());
         }
-
+        //The variable "teamIndex" is define outside the while loop. I use to do
+        //this to avoid problems if I need this variable further. Sometimes,
+        //I understand the scope of the variable and leave it inside the method
+        //or condition, but this is not the case.
         int teamIndex;
+        //This next block of code ensures that the user enters a valid team 
+        //number by repeatedly prompting until a valid integer within the range 
+        //of available teams is provided.
         while (true) {
-            // Ensure the input is an integer
+            //The next statement will be executed as long as the user enters an
+            //integer through myKB(keyboard input).
             while (!myKB.hasNextInt()) {
                 System.out.println("Please enter a valid team number!");
                 myKB.next(); // Consume the invalid input
             }
             teamIndex = myKB.nextInt();
 
-            // Check if the input is within the valid range
+            //If the input is an integer, it checks if it falls within the valid 
+            //range (1 to the size of the teams list (team.size()).
+            //If the input is valid, it breaks out of the loop.
             if (teamIndex >= 1 && teamIndex <= teams.size()) {
-                break; // Valid input, exit the loop
+                break; //We get a valid input, so we exit the loop.
             } else {
                 System.out.println("Please enter a valid team number!");
             }
