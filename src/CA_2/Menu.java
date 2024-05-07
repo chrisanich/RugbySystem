@@ -62,7 +62,7 @@ public interface Menu {
     }
     
     //This enum is to list all the different types of player. We add the
-    //parentheses to display the option in a more appealing and human way.
+    //parentheses to display the option in a more appealing and aesthetic way.
     //It is better "The 8-Man" than "THE_8_MAN" on the displayed menu.
     public enum PlayerType {
         PROMP("Promp"),

@@ -279,6 +279,10 @@ String filename = "Club_Form.txt";
         //Let's copy sorted elements back to the original list. This loop adds 
         //any remaining elements from the right half of the sublist to the 
         //temp list.
+        //Finally, this loop copies the sorted elements from the temp list back 
+        //to the original people list, starting from index left. It iterates 
+        //through the temp list, and for each element, it sets the corresponding 
+        //element in the people list at position left + k.
         for (int k = 0; k < temp.size(); k++) {
             people.set(left + k, temp.get(k));
         }
@@ -286,50 +290,49 @@ String filename = "Club_Form.txt";
     
     
     ////////////////////////////////////////////////////////////////////////////
+    //The next method is to search people according to the input from the user.
+    //THis method accepts the people array list and the string first_name,
+    //which is the variable we are looking for.
     public void searchPeople(List<Person> people, String first_name) {
-    if (first_name == null || first_name.trim().isEmpty()) {
-    System.out.println("Please enter a valid first name.");
-    return;
-}
+        
+        boolean found = false;
+        for (Person person : people) {
+            if (person.getFirstName().equalsIgnoreCase(first_name)) {
+                // Print the details of the found person
+                if (!found) {
+                    System.out.println("Person(s) found:");
+                    found = true;
+                }
+                System.out.println("ID: " + person.getId());
+                System.out.println("First Name: " + person.getFirstName());
+                System.out.println("Last Name: " + person.getLastName());
+                System.out.println("Email: " + person.getEmail());
+                System.out.println("Gender: " + person.getGender());
+                // Check if the person is assigned to a team
+                if (person.getTeam() != null) {
+                    System.out.println("Team: " + person.getTeam().getTeamName());
+                }
 
-    boolean found = false;
-    for (Person person : people) {
-        if (person.getFirstName().equalsIgnoreCase(first_name)) {
-            // Print the details of the found person
-            if (!found) {
-                System.out.println("Person(s) found:");
-                found = true;
-            }
-            System.out.println("ID: " + person.getId());
-            System.out.println("First Name: " + person.getFirstName());
-            System.out.println("Last Name: " + person.getLastName());
-            System.out.println("Email: " + person.getEmail());
-            System.out.println("Gender: " + person.getGender());
-            // Check if the person is assigned to a team
-            if (person.getTeam() != null) {
-                System.out.println("Team: " + person.getTeam().getTeamName());
-            }
+                // Add label indicating player or coach
+                if (person instanceof Player) {
+                    System.out.println("Staff: Player");
+                    // Display player type for players
+                    System.out.println("Player Type: " + ((Player) person).getPlayerType());
+                } else if (person instanceof Coach) {
+                    System.out.println("Staff: Coach");
+                    // Display coach type for coaches
+                    System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+                }
 
-            // Add label indicating player or coach
-            if (person instanceof Player) {
-                System.out.println("Staff: Player");
-                // Display player type for players
-                System.out.println("Player Type: " + ((Player) person).getPlayerType());
-            } else if (person instanceof Coach) {
-                System.out.println("Staff: Coach");
-                // Display coach type for coaches
-                System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+                System.out.println();
             }
+        }
 
-            System.out.println();
+        // If no matching people were found
+        if (!found) {
+            System.out.println("No person with first name '" + first_name + "' found.");
         }
     }
-
-    // If no matching people were found
-    if (!found) {
-        System.out.println("No person with first name '" + first_name + "' found.");
-    }
-}
 
     
     ////////////////////////////////////////////////////////////////////////////
