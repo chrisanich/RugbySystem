@@ -50,6 +50,9 @@ public class Menu_Imp {
             //(myKB) of the user, which has to be an integer (nextInt)
             int option = myKB.nextInt();
             
+            // Consume the newline character left in the buffer
+            myKB.nextLine();  // Add this line to consume the newline character
+            
             //If the option is less than 1 or more than the number of options of
             //the menu, a message asking for a right option is displayed on the
             //console

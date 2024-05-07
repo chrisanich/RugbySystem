@@ -174,29 +174,78 @@ String filename = "Club_Form.txt";
     }
     
     ////////////////////////////////////////////////////////////////////////////
-    
+    //In this case the algorith used is a merge method. In this case is named
+    //sortPeople in honor of the name given in the requirements, but it
+    //correspond to a merge sort method.
+    //In this case, the method accepts three elements, the array list people
+    //(which comes from the document Club_Form.txt), left and right, integers
+    //that represents the boundaries of the sublists sorted, which are sorted
+    //in this method.
+    //This list splits the array list "people" into smaller parts, sorting each
+    //part individually, and then putting them back together.
+    //THe sortPeople method takes people array list, the int left (left boundary)
+    //and int right (right boundary)
     public void sortPeople(List<Person> people, int left, int right) {
+        //This if statement compares if "left" is less to "right", what means
+        //that there are still parts to sort.
         if (left < right) {
+            //We create a "mid" variable int to store the value of the
+            //middle of the part which is sorted by using the next arithmetic
+            //formula and will become part of the recursive method "sortPeople"
             int mid = (left + right) / 2;
 
-            // Sort the left half
-            sortPeople(people, left, mid);
-            // Sort the right half
+            //To sort the left half: we need to recursively call the "sortPeople"
+            //method, but this time, using mid as the right boundary. This "mid"
+            //boundary will change every recursion until the left of the above
+            //if statement is equal to the right one.
+            sortPeople(people, left, mid); 
+            //Sorting right half: we need to recursively call the "sortPeople"
+            //method, but this time, using mid plus 1 as the left boundary.
+            //BY adding 1, we ensure we start from the index immidiately after
+            //the mid element, hence mid + 1.
+            //This "mid" boundary will change every recursion until the left
+            //of the above if statement is equal to the right one. 
             sortPeople(people, mid + 1, right);
 
-            // Merge the sorted halves
+            //After we have both small parts sorted, we merge them in a small
+            //sublist by calling the "merge"method.
+            //Basically, is to sort recursevely and and then merge to get
+            //everything sorted.
             merge(people, left, mid, right);
         }
     }
 
+    //THis is the "merge" method to merge the parts from the "sortPeople" method
+    //It acceps three attributes, the array list people, the left boundary,
+    //the right part of of the boundary and the always and recursively changing
+    //mid variable.
     public void merge(List<Person> people, int left, int mid, int right) {
+        //We create an array list called "temp" to temporarily inside the method
+        //store the information of the class Person (lets remember that this
+        //class has all the attibutes then inherited to the Coach and Player
+        //classes.
         List<Person> temp = new ArrayList<>();
+        //The "i" and "j" variables will track the current position in the left
+        //and right halves of the assesed sublist
+        //Here we instantiate a variable "i" to store the incoming left int.
         int i = left;
+        //Here we instantiate a variable j to store the incoming mid int plus 1
+        //to represent the next value after the middle
         int j = mid + 1;
 
+        //THis will loop will continue always i and j are within their respective
+        //halves of the sublist
         while (i <= mid && j <= right) {
-            // Compare the last names of Person objects
-            if (people.get(i).getFirstName().compareToIgnoreCase(people.get(j).getFirstName()) <= 0) {
+            //At this line, we get the people at index "i", that is the one to
+            //the most left of the sublist, we get its first name, wich comes
+            //from the getFirst list of the Person class, we igonore case and
+            //compare it with the first name of the person on "people" at index
+            //"j" (look at the parenthesis at the right).
+            //"0 >" checks if the comparison result is less than "0", indicating 
+            //that the first name of the person at index "i" precedes the 1st 
+            //name of the person at index "j" alphabetically.
+            if (0 > people.get(i).getFirstName().compareToIgnoreCase(people.get(j).getFirstName())) {
+                //
                 temp.add(people.get(i));
                 i++;
             } else {
@@ -226,44 +275,49 @@ String filename = "Club_Form.txt";
     
     ////////////////////////////////////////////////////////////////////////////
     public void searchPeople(List<Person> people, String first_name) {
-        boolean found = false;
-        for (Person person : people) {
-            if (person.getFirstName().equalsIgnoreCase(first_name)) {
-                // Print the details of the found person
-                if (!found) {
-                    System.out.println("Person(s) found:");
-                    found = true;
-                }
-                System.out.println("ID: " + person.getId());
-                System.out.println("First Name: " + person.getFirstName());
-                System.out.println("Last Name: " + person.getLastName());
-                System.out.println("Email: " + person.getEmail());
-                System.out.println("Gender: " + person.getGender());
-                // Check if the person is assigned to a team
-                if (person.getTeam() != null) {
-                    System.out.println("Team: " + person.getTeam().getTeamName());
-                }
+    if (first_name == null || first_name.trim().isEmpty()) {
+    System.out.println("Please enter a valid first name.");
+    return;
+}
 
-                // Add label indicating player or coach
-                if (person instanceof Player) {
-                    System.out.println("Staff: Player");
-                    // Display player type for players
-                    System.out.println("Player Type: " + ((Player) person).getPlayerType());
-                } else if (person instanceof Coach) {
-                    System.out.println("Staff: Coach");
-                    // Display coach type for coaches
-                    System.out.println("Coach Type: " + ((Coach) person).getCoachType());
-                }
-
-                System.out.println();
+    boolean found = false;
+    for (Person person : people) {
+        if (person.getFirstName().equalsIgnoreCase(first_name)) {
+            // Print the details of the found person
+            if (!found) {
+                System.out.println("Person(s) found:");
+                found = true;
             }
-        }
+            System.out.println("ID: " + person.getId());
+            System.out.println("First Name: " + person.getFirstName());
+            System.out.println("Last Name: " + person.getLastName());
+            System.out.println("Email: " + person.getEmail());
+            System.out.println("Gender: " + person.getGender());
+            // Check if the person is assigned to a team
+            if (person.getTeam() != null) {
+                System.out.println("Team: " + person.getTeam().getTeamName());
+            }
 
-        // If no matching people were found
-        if (!found) {
-            System.out.println("No person with first name '" + first_name + "' found.");
+            // Add label indicating player or coach
+            if (person instanceof Player) {
+                System.out.println("Staff: Player");
+                // Display player type for players
+                System.out.println("Player Type: " + ((Player) person).getPlayerType());
+            } else if (person instanceof Coach) {
+                System.out.println("Staff: Coach");
+                // Display coach type for coaches
+                System.out.println("Coach Type: " + ((Coach) person).getCoachType());
+            }
+
+            System.out.println();
         }
     }
+
+    // If no matching people were found
+    if (!found) {
+        System.out.println("No person with first name '" + first_name + "' found.");
+    }
+}
 
     
     ////////////////////////////////////////////////////////////////////////////
