@@ -294,30 +294,48 @@ String filename = "Club_Form.txt";
     //THis method accepts the people array list and the string first_name,
     //which is the variable we are looking for.
     public void searchPeople(List<Person> people, String first_name) {
-        
+        //We create a new variable found of type boolean, which is initialised
+        //with a false value and will help to track individuals during the 
+        //search.
         boolean found = false;
+        //THe next line corresponds to a for, which notation is possible thanks
+        //the use of Person as a class and person as array list, but the meaning
+        //is the same that the traditional one.
         for (Person person : people) {
+            //IN the next line, there is a comparison between what is stored
+            //in the person object of class Person and what was written by the
+            //user, ignoring casee.
             if (person.getFirstName().equalsIgnoreCase(first_name)) {
-                // Print the details of the found person
+                //Print the details of the "found" person, which was declared
+                //"false" some lines ago, so, if a matching person is found and
+                //it's  the first match (found is still false), it prints a 
+                //message indicating that that person(s) was found and updates
+                //the found variable to true.
                 if (!found) {
                     System.out.println("Person(s) found:");
                     found = true;
                 }
+                //Here, the details of the person found are displayed to the
+                //user on the command line.
                 System.out.println("ID: " + person.getId());
                 System.out.println("First Name: " + person.getFirstName());
                 System.out.println("Last Name: " + person.getLastName());
                 System.out.println("Email: " + person.getEmail());
                 System.out.println("Gender: " + person.getGender());
-                // Check if the person is assigned to a team
+                //If the person was assigned to a tean, a message is displayed
+                //indicating it.
                 if (person.getTeam() != null) {
                     System.out.println("Team: " + person.getTeam().getTeamName());
                 }
 
-                // Add label indicating player or coach
+                //If the person was assinged as a player (Staff type), its type 
+                //is display along the type of coach as well
                 if (person instanceof Player) {
                     System.out.println("Staff: Player");
                     // Display player type for players
                     System.out.println("Player Type: " + ((Player) person).getPlayerType());
+                //If the person is not a Player, but an instance of the Coach
+                //class, its type is display with the type of coach as well
                 } else if (person instanceof Coach) {
                     System.out.println("Staff: Coach");
                     // Display coach type for coaches
