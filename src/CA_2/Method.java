@@ -338,15 +338,16 @@ String filename = "Club_Form.txt";
                 //class, its type is display with the type of coach as well
                 } else if (person instanceof Coach) {
                     System.out.println("Staff: Coach");
-                    // Display coach type for coaches
+                    //We display coach type for coaches
                     System.out.println("Coach Type: " + ((Coach) person).getCoachType());
                 }
-
+                //We print an empty line only for aesthetical purposes
                 System.out.println();
             }
         }
 
-        // If no matching people were found
+        //THis last line checks if the if statement finds a false found, what
+        //means that no matching people were found
         if (!found) {
             System.out.println("No person with first name '" + first_name + "' found.");
         }
@@ -354,22 +355,29 @@ String filename = "Club_Form.txt";
 
     
     ////////////////////////////////////////////////////////////////////////////
+    //When adding a person, we use this method, which takes two parameters,
+    //the people array list and the teams array list.
     public void addPerson(List<Person> people, List<Team> teams) {
-        Scanner scanner = new Scanner(System.in);
+        //In this line we create a new scanner for the user to enter their
+        //choices
+        Scanner myKB = new Scanner(System.in);
 
-        // Prompt for First Name
+        //Here, we prompt the user to enter the first name of the person their
+        //are adding to the list
         System.out.println("Enter the First Name of the person:");
-        String first_name = scanner.nextLine();
+        String first_name = myKB.nextLine();
 
-        // Prompt for Last Name
+        //Here, we prompt the user to enter the last name of the person their
+        //are adding to the list
         System.out.println("Enter the Last Name of the person:");
-        String last_name = scanner.nextLine();
+        String last_name = myKB.nextLine();
 
-        // Prompt for Email
+        //Here, we prompt the user to enter the email of the person their
+        //are adding to the list
         String email;
         while (true) {
             System.out.println("Enter the Email of the person:");
-            email = scanner.nextLine();
+            email = myKB.nextLine();
             if (isValidEmail(email)) {
                 break;
             } else {
@@ -377,23 +385,33 @@ String filename = "Club_Form.txt";
             }
         }
 
-        // Prompt for Gender
+        //Here, we prompt the user to enter the gender of the person their
+        //are adding to the list
         System.out.println("Enter the Gender of the person:");
-        String gender = scanner.nextLine();
+        String gender = myKB.nextLine();
 
-        // Generate ID
+        //This is the first step to add a proper "id to the new individual".
+        //We define the variable id, but do not declare it.
         int id;
+        //THis if statement is to add the next available id number to the first 
+        //individual after the last one of the provided list in the .txt file.
         if (people.isEmpty()) {
-            // If the list is empty, start the ID from 1001
+            //If the list is empty, start the ID from 1001
             id = 1001;
         } else {
-            // Otherwise, find the maximum ID and increment it by 1
+            //Otherwise, find the maximum ID and increment it by 1
             int maxId = 0;
+            //In this for loop, we iterate getting every ID until the one found
+            //is equal or less than the maxId, which was intanstiate as 0 in the
+            //previous line of comments.
             for (Person person : people) {
                 if (person.getId() > maxId) {
                     maxId = person.getId();
                 }
             }
+             //And here, we increment maxId by 1 in every iteration, so, there is
+            //going to be a point when maxId will be equal to "person.getId()"
+            //and the for loop will stop, giving way to the next line of code.
             id = maxId + 1;
         }
 
@@ -406,11 +424,11 @@ String filename = "Club_Form.txt";
         int teamIndex;
         while (true) {
             // Ensure the input is an integer
-            while (!scanner.hasNextInt()) {
+            while (!myKB.hasNextInt()) {
                 System.out.println("Please enter a valid team number!");
-                scanner.next(); // Consume the invalid input
+                myKB.next(); // Consume the invalid input
             }
-            teamIndex = scanner.nextInt();
+            teamIndex = myKB.nextInt();
 
             // Check if the input is within the valid range
             if (teamIndex >= 1 && teamIndex <= teams.size()) {
@@ -429,11 +447,11 @@ String filename = "Club_Form.txt";
         int staffChoice;
         while (true) {
             // Ensure the input is an integer
-            while (!scanner.hasNextInt()) {
+            while (!myKB.hasNextInt()) {
                 System.out.println("Please enter a valid choice!");
-                scanner.next(); // Consume the invalid input
+                myKB.next(); // Consume the invalid input
             }
-            staffChoice = scanner.nextInt();
+            staffChoice = myKB.nextInt();
 
             // Check if the input is within the valid range
             if (staffChoice == 1 || staffChoice == 2) {
@@ -450,7 +468,7 @@ String filename = "Club_Form.txt";
             System.out.println("3. Flanker");
             System.out.println("4. The 8-Man");
             System.out.println("5. Fullback");
-            int playerTypeChoice = scanner.nextInt();
+            int playerTypeChoice = myKB.nextInt();
             PlayerType playerType = null;
             switch (playerTypeChoice) {
                 case 1:
@@ -487,7 +505,7 @@ String filename = "Club_Form.txt";
             System.out.println("3. Assistant Forwards Coach");
             System.out.println("4. Academy Fordwards Coach");
             System.out.println("5. Scrum Coach");
-            int coachTypeChoice = scanner.nextInt();
+            int coachTypeChoice = myKB.nextInt();
             
             ////////////////////////////////////////////////////////////////////
             CoachType coachType = null;
