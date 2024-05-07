@@ -164,7 +164,8 @@ String filename = "Club_Form.txt";
         }   
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////////////
-        //Execution of the methods
+        //Execution of the main_menu method, from where the whole program is
+        //started (Menu_Imp class)
         menu.main_menu(myKB, people, teams, filename);
         
         

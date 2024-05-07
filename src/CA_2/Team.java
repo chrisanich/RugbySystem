@@ -11,8 +11,9 @@ import java.util.ArrayList;
  * 12-05-2024
  */
 public class Team { 
-    //We start creating all the atributes of the class. What attributes are
-    //necessary were invented.
+    //We start creating all the atributes of the class. We start with the name
+    //of the team as a String and two array lists to store the inviduals of
+    //class Coach and Player
     private String team_name;
     private ArrayList<Coach>  coaches;
     private ArrayList<Player> players;
@@ -21,25 +22,28 @@ public class Team {
     //attributes to it. So, every time we create an object with this class
     //it will have all the attributes inside it.
     public Team (String team_name) {
-        //The next line add different attributes to every actor from the class
-        //Coach. With this, we create atributes and assign its value when using
-        //this method
+        //With this line we assign the team_name string, coaches and players array lists,
+        //from the constructor to the Team class, determining finally their stored value.
         this.team_name = team_name;
         this.coaches = new ArrayList<>();
         this.players = new ArrayList<>();
 
     }
     
-    //Inside the class we are calling a method to get the information we need 
-    //for everyone of the attributes of the class
+    //This is called the getter, and declares a public method called
+    //getTeamName(), which returns the playerType variable when called
     public String getTeamName() {
         return team_name;
     }
     
+    //This next block is to add the coaches to teams (still in process of 
+    //implementation)
     public void addCoach (Coach coach) {
         coaches.add(coach);
     }
     
+    //This next block is to add the players to teams (still in process of 
+    //implementation)
     public void addPlayer (Player player) {
         players.add(player);
     }

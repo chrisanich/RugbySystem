@@ -9,8 +9,8 @@ package CA_2;
  * 12-05-2024
  */
 public class Person {
-    //We start creating all the atributes of the class. What attributes are
-    //necessary were obtained from the "Club_Form.txt" document.
+    //We start creating all the atributes of the class. The necessary attributes
+    //were obtained from the "Club_Form.txt" document.
     private int id;
     private String first_name;
     private String last_name;
@@ -23,9 +23,8 @@ public class Person {
     //it will have all the attributes inside it.
     public Person (int id, String first_name, String last_name, String email, String gender) {
         //The next line add different attributes to every actor from the class
-        //Coach. With this, we create atributes and assign its value when using
+        //Person. With this, we create atributes and assign its value when using
         //this method
-        
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -62,10 +61,14 @@ public class Person {
     }
     
     public Team getTeam() {
+        //This method gets the information for the variable retuned, in this
+        //case, team.
         return team;
     }
     
     public void assignTeam(Team team) {
+        //THis method is created to assign a team to every actor of the class
+        //Person by returning team as a value when is called.
         this.team = team;
     }
     
