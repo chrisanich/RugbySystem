@@ -443,31 +443,45 @@ String filename = "Club_Form.txt";
             //range (1 to the size of the teams list (team.size()).
             //If the input is valid, it breaks out of the loop.
             if (teamIndex >= 1 && teamIndex <= teams.size()) {
-                break; //We get a valid input, so we exit the loop.
+                break; //We got a valid input, so we exit the loop.
             } else {
+                //Otherwise, we get an error print
                 System.out.println("Please enter a valid team number!");
             }
         }
-
+        //This next line retrieves the selected team from 
+        //the "teams" list based on the index entered by the user. The 
+        //substraction of 1, as always is to get the correct index in the list.
         Team selectedTeam = teams.get(teamIndex - 1);
 
-        // Prompt for Staff selection
+        //Here, we prompt the user to choose between adding a Player or a Coach
         System.out.println("Select the kind of staff:");
         System.out.println("1. Player");
         System.out.println("2. Coach");
+        //THis next int will store the choice of the user, though, it is still
+        //not initialised. Anyway, this keeps it out of the scope of the next
+        //while loop.
         int staffChoice;
+        
         while (true) {
-            // Ensure the input is an integer
+            //THis is an error message in case the user enters a value that is
+            //not an integer.
             while (!myKB.hasNextInt()) {
                 System.out.println("Please enter a valid choice!");
                 myKB.next(); // Consume the invalid input
             }
+            //staffChoise was defined only few line above, now we assign the 
+            //input from the user to it an conditionate it in the following 
+            //if statement.
             staffChoice = myKB.nextInt();
 
-            // Check if the input is within the valid range
+            //If the input from the user is an integer, we check if it 
+            //corresponds to a valid choice (1 for player or 2 for coach).
             if (staffChoice == 1 || staffChoice == 2) {
-                break; // Valid input, exit the loop
+                break; //If th input is valid, we break the loop.
             } else {
+                //If the input is not valid, we display an error message asking
+                //for a valid inñut.
                 System.out.println("Please enter a valid choice!");
             }
         }
