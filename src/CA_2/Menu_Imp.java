@@ -96,7 +96,7 @@ public class Menu_Imp {
                         //With this method we can get a completely new and random person created from
                         //the data provided on the .txt file. That person is stored at the end of
                         //the list, respecting the "id" value
-                        method.getRandomPerson(people, teams, filename); // Call the method from the Method class
+                        method.getRandomPerson(people, teams); // Call the method from the Method class
                         break;
                     case EXIT:
                         //If this option is chosen, the user exits the program, but before this, the

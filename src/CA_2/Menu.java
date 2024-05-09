@@ -48,13 +48,20 @@ public interface Menu {
         ASSISTANT_FORWARDS_COACH("Assistant Forwards Coach"),
         ACADEMY_FORWARDS_COACH("Academy Fordwards Coach"),
         SCRUM_COACH("Scrum Coach");
-
+        
+        //Here we declare the private instance variable of type string 
+        //"displayName"
         private final String displayName;
-
+        
+        //This is the constructor of the CoachType enum. It takes the string
+        //displayName.
         CoachType(String displayName) {
             this.displayName = displayName;
         }
-
+        //THis annotation @Override indicates that the following method overrides
+        //a method declared. In this case, toString is a java method that returns
+        //a string representation of the objects of the enum (that do not look
+        //good for a menu to the user.
         @Override
         public String toString() {
             return displayName;
@@ -70,13 +77,21 @@ public interface Menu {
         FLANKER("Flanker"),
         THE_8_MAN("The 8-Man"),
         FULLBACK("Fullback");
-
+        
+        //Here we declare the private instance variable of type string 
+        //"displayName"
         private final String displayName;
-
+        
+        //This is the constructor of the PlayerType enum. It takes the string
+        //displayName.
         PlayerType(String displayName) {
             this.displayName = displayName;
         }
-
+        
+        //THis annotation @Override indicates that the following method overrides
+        //a method declared. In this case, toString is a java method that returns
+        //a string representation of the objects of the enum (that do not look
+        //good for a menu to the user.
         @Override
         public String toString() {
             return displayName;

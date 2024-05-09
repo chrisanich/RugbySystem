@@ -661,49 +661,82 @@ String filename = "Club_Form.txt";
     }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-    public void getRandomPerson(List<Person> people, List<Team> teams, String filename) {
+    //This is our last method of the assignment. It is meant to take random
+    //data from the list of people provided on the .txt file and create new
+    //individuals to populate the database of players and coaches of the rugby
+    //teams.
+    //THis method "getRandomPerson" takes three attributes, the people array,
+    //which contains all the information from the file organised in an array list.
+    //It takes the array list teams to be assigned to the players
+    public void getRandomPerson(List<Person> people, List<Team> teams) {
+        //Like before, we create a random variable from Random class to be
+        //able to get random numbers in our method.
         Random random = new Random();
 
-        // Ensure there's at least one person to add
+        //This if condition is here in case there is no people in our people
+        //array. In that case, an error message is displayed and returns from
+        //the method.
         if (people.isEmpty()) {
             System.out.println("The list is empty. Please add some people before generating a random person.");
             return;
         }
 
-        // Get a random person from the existing list
-        Person randomPerson = people.get(random.nextInt(people.size()));
-
-        // Generate a new ID for the new person
+        //This next line is very important to add the new individuals properly
+        //to our list of people. An int variable "newID" is created and initialised
+        //with the integer value of the following code. To explain it, we take
+        //the people array list and apply the "stream()" operation, which sequentially
+        //opperates through the element of it, to continue with the "mapToInt"
+        //method. It converts every Person object in its corresponding "id".
+        //With the max()operation we get the maximum element of the stream and
+        //adds 1 to add the new person to the last position or ID.
+        //The .orElse(0) operation is optional and returns 0 in case the people
+        //Array is empty.
         int newId = people.stream().mapToInt(Person::getId).max().orElse(0) + 1;
 
-        // Randomly select attributes from existing people
+        //In the next four lines, we call the getRandomAttribute, which is below
+        //this one and store the gotten string in every person attibute.
         String firstName = getRandomAttribute(people, Person::getFirstName);
         String lastName = getRandomAttribute(people, Person::getLastName);
         String email = getRandomAttribute(people, Person::getEmail);
         String gender = getRandomAttribute(people, Person::getGender);
 
-        // Generate random coach type for coaches
+        //CoachType is a method from the Coach attribute, which is also one
+        //of our enums on the Menu interface.
+        //We create a variable of this class to store a random coach type.
+        //We start witch CoachType method, then continue with values(), which
+        //returns an array containing all the enum constants in their respective
+        //order. The random inside the [] generates a random number between 0
+        //(inclusive) and the length of the enum constants (exclusive). This is,
+        //among 0 and 4, the 5 coach type options
         CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];
 
-        // Create the individual
+        //We create a person variable of Person class.
         Person person;
+        //This boolean "isPlayer", randomly determines, with a 70% chance, if a
+        //person is a player or not. If not, they are a coach.
         boolean isPlayer = random.nextDouble() < 0.7; // 70% chance of being a player
         if (isPlayer) {
+            //IN case of being player, a similar case to the coach type is applied
+            //to get a random number among 0 and 4, according to the number of
+            //player types
             PlayerType randomPlayerType = PlayerType.values()[random.nextInt(PlayerType.values().length)]; // Generate random player type
             person = new Player(newId, firstName, lastName, email, gender, randomPlayerType); // Set the random player type
         } else {
+            //This else is the same but if the person turns out to be a coach
             person = new Coach(newId, firstName, lastName, email, gender, randomCoachType);
         }
 
-        // Assign the individual to a random team
+        //THis line creates a random element from the teams array, which stores
+        //The team names and returns us a random one.
         Team randomTeam = teams.get(random.nextInt(teams.size()));
+        //In this line we assign that random team to the person.
         person.assignTeam(randomTeam);
 
-        // Add the individual to the list of people
+        //And finally, that person, with all their attributes, is stored in the
+        //people array list as a new individual:
         people.add(person);
 
-        // Print the information of the newly added person
+        //Here we print all the information of the new person
         System.out.println("New person added:");
         System.out.println("ID: " + person.getId());
         System.out.println("First Name: " + person.getFirstName());
@@ -711,6 +744,8 @@ String filename = "Club_Form.txt";
         System.out.println("Email: " + person.getEmail());
         System.out.println("Gender: " + person.getGender());
         System.out.println("Team: " + person.getTeam().getTeamName());
+        //This if and else condition is like before, one alternative is printed
+        //if the new individual is a player and other one if is a coach.
         if (person instanceof Player) {
             System.out.println("Staff: Player");
             // Display player type for players
@@ -722,10 +757,19 @@ String filename = "Club_Form.txt";
         System.out.println();
     }
 
-    // Helper method to get a random attribute from existing people
+    //This is the beforemention method to get a random attribute from the list
+    //of people to create a new random one to populate the array list.
+    //This method takes the people array list and a Function method <Person, String>
+    //called attributeGetter. The Function is an interface that comes from the
+    //package "java.util.function" This is very useful, because accept an argument
+    //(in our case Person) and produces a String result, wich is the attibute of
+    //the random person of the list we are taking the attribute from.
     private String getRandomAttribute(List<Person> people, Function<Person, String> attributeGetter) {
+        //We create a random variable of Random class to apply whithin the method
         Random random = new Random();
-        // Get a random person from the list
+        //This line generates a random index withing the range of the people
+        //list and returns the Person object at that random index. This person
+        //will be assigned to randomPerson variable of Person class.
         Person randomPerson = people.get(random.nextInt(people.size()));
         // Get the specified attribute from the random person
         return attributeGetter.apply(randomPerson);
@@ -737,10 +781,17 @@ String filename = "Club_Form.txt";
     public void printList(List<Person> people) {
         //We create a counter i to stop the loop and display only 20 records.
         int counter = 0;
+        //This is a loop that will iterate every person from the people array
+        //list, and will break when the before instantiate counter gets 20.
+        //THis is to display only 20 people of the list, as ask in the
+        //requirements
         for (Person person : people) {
             if (counter >= 20) {
                 break; //Here we break or exit the loop if the counter gets 20
             }
+            //Then, in the loop, we print every attribute of every person,
+            //including their team, if it a player, a coach and their respective
+            //type.
             System.out.println("ID: " + person.getId());
             System.out.println("First Name: " + person.getFirstName());
             System.out.println("Last Name: " + person.getLastName());
@@ -748,11 +799,12 @@ String filename = "Club_Form.txt";
             System.out.println("Gender: " + person.getGender());
             System.out.println("Team: " + person.getTeam().getTeamName()); // Display the assigned team name
 
-            // Add label indicating player or coach
+            //If the person a player, that will be displayed plus its type.
             if (person instanceof Player) {
                 System.out.println("Staff: Player");
                 // Display player type for players
                 System.out.println("Player Type: " + ((Player) person).getPlayerType());
+            //If the person a coach, that will be displayed plus its type.
             } else if (person instanceof Coach) {
                 System.out.println("Staff: Coach");
                 // Display coach type for coaches
@@ -760,7 +812,8 @@ String filename = "Club_Form.txt";
             }
 
             System.out.println();
-            counter++; //Here the counter adds 1 every loop.
+            counter++;//Here the counter adds 1 every loop until it gets 20 as
+                     //determined before.
         }
     }
 }
