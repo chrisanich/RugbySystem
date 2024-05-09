@@ -33,15 +33,7 @@ public class Method {
         Menu_Imp menu = new Menu_Imp();
         //First step is to create a Scanner to read input from the user's
         //keyboard.
-        Scanner myKB = new Scanner(System.in);
-        
-        //We create an instance of the interface to allow us
-        RugbySystem rugby = new RugbySystem();
-        
-        //Since the number options in the enums 
-        //is indexed from the 0 position 
-        //Therefor we need to create a way to deduct user input from -1 to get a 0
-        Menu.MenuOption selectOption = null;
+        Scanner myKB = new Scanner(System.in);      
          
         //We prompt the user to write the name of a file .txt to read.
         System.out.println("Please enter a filename to read: ");
@@ -105,8 +97,6 @@ String filename = "Club_Form.txt";
                 //"random". With this we can get a random number.
                 Random random = new Random();
                 
-                // Convert CoachType enum values to ArrayList
-                ArrayList<CoachType> coachTypesList = new ArrayList<>(List.of(CoachType.values()));
                 
                 // Randomly select coach type
                 CoachType randomCoachType = CoachType.values()[random.nextInt(CoachType.values().length)];
@@ -373,14 +363,20 @@ String filename = "Club_Form.txt";
         String last_name = myKB.nextLine();
 
         //Here, we prompt the user to enter the email of the person their
-        //are adding to the list
+        //are adding to the list. This input will be checked inside this while
+        //loop by calling the "isValidEmail" method created below, which returns
+        //a boolean, which only allows to continue with the addPerson method if
+        //the input meets the requirements of an email, as it is seen afterwards.
         String email;
         while (true) {
             System.out.println("Enter the Email of the person:");
             email = myKB.nextLine();
+            //Here is the call to the "isValidEmail"
             if (isValidEmail(email)) {
                 break;
             } else {
+                //In case the input is not valid as an email, the user is
+                //prompted to write again.
                 System.out.println("Invalid email format. Please try again.");
             }
         }
@@ -463,6 +459,9 @@ String filename = "Club_Form.txt";
         //while loop.
         int staffChoice;
         
+        //This is not the best practice, to have a true statement inside a while
+        //condition, but here it meets what we need, to check if the user
+        //entered an option.
         while (true) {
             //THis is an error message in case the user enters a value that is
             //not an integer.
@@ -485,16 +484,24 @@ String filename = "Club_Form.txt";
                 System.out.println("Please enter a valid choice!");
             }
         }
+        //This is in case the user chooses Player (option 1)
         if (staffChoice == 1) {
-            // If Player
+            //We prompt the user to choose among the next 5 types of players
             System.out.println("Select the type of Player:");
             System.out.println("1. Promp");
             System.out.println("2. Hooker");
             System.out.println("3. Flanker");
             System.out.println("4. The 8-Man");
             System.out.println("5. Fullback");
+            //We create the next int variable to store the option, which will
+            //be assessed in the next switch case statement. This stores a
+            //number from the scanner "myKB (System.in)"
             int playerTypeChoice = myKB.nextInt();
+            //We initialise the variable "playerType" of class PlayerType to null
+            //store the chosen type of player chosen later on.
             PlayerType playerType = null;
+            //This is the switch case where the user enters their option and
+            //selects one of the next alternatives.
             switch (playerTypeChoice) {
                 case 1:
                     playerType = PlayerType.PROMP;
@@ -511,29 +518,53 @@ String filename = "Club_Form.txt";
                 case 5:
                     playerType = PlayerType.FULLBACK;
                     break;
+                //In case the user does not chooses a write option, the player
+                //is assigned automatically to the team "Colo-Colo". This is
+                //because it was decided that every player must belong to a team.
                 default:
                     System.out.println("Invalid choice, setting to Hooker.");
                     playerType = PlayerType.HOOKER;
                     break;
             }
+            //We create a variable "person" of "Person" class to store a new
+            //player with all their attributes.
             Person person = new Player(id, first_name, last_name, email, gender, playerType);
+            //This person is assigned the selected team through the method
+            //assignTeam from the Person class.
             person.assignTeam(selectedTeam);
+            //In the next line we assigned the new person to the people array
+            //list, which stores all the information provided initially by the
+            //provided .txt document attached to the project.
             people.add(person);
+            //In this line the programs says the user that the person was added
+            //succesfully for the user to check out that the information
+            //was properly added.
             System.out.println(first_name + " " + last_name + " has been added as \"" + playerType + "\" to " + "\"" + selectedTeam.getTeamName() + "\" successfully.");
-            // Display coach information
+            //In this next line, we simply print the all the data or attributes of
+            //our added new person for the user to re-check out visually that the 
+            //information was properly added. For this, we call the 
+            //"displayPersonInformation" method, that is the last of this Method
+            //class.
             displayPersonInformation(person);
+            
+          //This is in case the user chooses Coach (option 2)
         } else if (staffChoice == 2) {
-            // If Coach
+            //We prompt the user to choose among the next 5 types of coach
             System.out.println("Select the type of Coach:");
             System.out.println("1. Head Coach");
             System.out.println("2. Assistant Coach");
             System.out.println("3. Assistant Forwards Coach");
             System.out.println("4. Academy Fordwards Coach");
             System.out.println("5. Scrum Coach");
+            //We create the next int variable to store the option, which will
+            //be assessed in the next switch case statement. This stores a
+            //number from the scanner "myKB (System.in)"
             int coachTypeChoice = myKB.nextInt();
-            
-            ////////////////////////////////////////////////////////////////////
+            //We initialise the variable "coachType" of class CoachType to null
+            //store the chosen type of coach chosen later on.
             CoachType coachType = null;
+            //This is the switch case where the user enters their option and
+            //selects one of the next alternatives.
             switch (coachTypeChoice) {
                 case 1:
                     coachType = CoachType.HEAD_COACH;
@@ -550,47 +581,82 @@ String filename = "Club_Form.txt";
                 case 5:
                     coachType = CoachType.SCRUM_COACH;
                     break;
+                //In case the user does not chooses a write option, the coach
+                //is assigned automatically to the team "Colo-Colo". This is
+                //because it was decided that every coach must belong to a team.    
                 default:
                     System.out.println("Invalid choice, setting to Assistant Coach.");
                     coachType = CoachType.ASSISTANT_COACH;
                     break;
             }
+            //We create a variable "person" of "Person" class to store a new
+            //coach with all their attributes.
             Person person = new Coach(id, first_name, last_name, email, gender, coachType);
+            //This person is assigned the selected team through the method
+            //assignTeam from the Person class.
             person.assignTeam(selectedTeam);
+            //In the next line we assigned the new person to the people array
+            //list, which stores all the information provided initially by the
+            //provided .txt document attached to the project.
             people.add(person);
+            //In this line the programs says the user that the person was added
+            //succesfully for the user to check out that the information
+            //was properly added.
             System.out.println(first_name + " " + last_name + " has been added as \"" + coachType + "\" to " + "\"" + selectedTeam.getTeamName() + "\" successfully.");
-            // Display coach information
+            //In this next line, we simply print the all the data or attributes of
+            //our added new person for the user to re-check out visually that the 
+            //information was properly added. For this, we call the 
+            //"displayPersonInformation" method, that is the last of this Method
+            //class.
             displayPersonInformation(person);
         } else {
+            //This is printed in case the user enters an invalid option.
             System.out.println("Invalid choice.");
         }
     }
 
-    // Helper method to display person information
+    //This method is created to display the information of the added person.
+    //It could have been inside the addPerson method, but the choice of printing
+    //in an apart method was to keep the code more organised.
+    //This method takes a person variable as an attribute or parameter.
     private void displayPersonInformation(Person person) {
+        //The method prints every data from every person through the "getter"
+        //from the class Person
         System.out.println("ID: " + person.getId());
         System.out.println("First Name: " + person.getFirstName());
         System.out.println("Last Name: " + person.getLastName());
         System.out.println("Email: " + person.getEmail());
         System.out.println("Gender: " + person.getGender());
         System.out.println("Team: " + person.getTeam().getTeamName());
+        //We get to the part where the displayed information depends on the type
+        //of staff, Player or Coach. For this we use the "instanceof" method to
+        //know if the person object is an instance of "Player" class.
         if (person instanceof Player) {
+            //If the option is a player, this is printed followed by the type of
+            //player
             System.out.println("Staff: Player");
-            // Display player type for players
             System.out.println("Player Type: " + ((Player) person).getPlayerType());
+          //The same for Coach if coach is chosen.
         } else if (person instanceof Coach) {
             System.out.println("Staff: Coach");
-            // Display coach type for coaches
             System.out.println("Coach Type: " + ((Coach) person).getCoachType());
         }
+        //This line only prints an space for aesthetic purposes.
         System.out.println();
     }
 
-    // Helper method to validate email format
+    //This methos is just to check if the email format is correct in the previous
+    //method. To be accepted, the input must have an string followed by at (@),
+    //followed by another string, a dot (.) and a final string. If this
+    //requirements are met, the input is accepted, otherwise, it must be written
+    //again.
     private boolean isValidEmail(String email) {
         // Email format pattern with dot after '@'
+        //This is a new variable of string class which stores what was said
+        //just above, it checks string, at, string, dot, string.
         String emailPattern = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]+$";
         // Check if the email matches the pattern
+        //It returns the email if it matches the pattern.
         return email.matches(emailPattern);
     }
 
