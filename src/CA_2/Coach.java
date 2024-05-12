@@ -16,8 +16,6 @@ import CA_2.Menu.CoachType;
 // and methods from the Person class.
 public class Coach extends Person {
     //With this line declares a private instance of type Team and represents the
-    //team the coach was assigned to (currently unused).////////////////////////
-    private Team assignedTeam;
     //We create attributes to give the coaches a different type through
     //the CoachType class (imported above)
     private CoachType coachType; // Change the type to CoachType enum

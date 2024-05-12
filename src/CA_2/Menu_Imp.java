@@ -69,7 +69,8 @@ public class Menu_Imp {
                         //followed by the printList method for the user to see
                         //an alphabetically arrange by first name number of
                         //individuals from a file. Only 20 people are displayed
-                        //according to the requirements
+                        //according to the requirements by using the printList
+                        //method.
                         method.sortPeople(people, 0, people.size() - 1);
                         method.printList(people);
                         break;
@@ -79,6 +80,14 @@ public class Menu_Imp {
                         //it is going to be implemented in the next update.
                         System.out.println("\nPlease enter the first name of the player or coach"
                                 + " you are looking for: ");
+                        //First of all, we need to call our sorting algortithm to be
+                        //able to utilise a binary search algorithm properly. This is
+                        //especially utill in case we need to search data frequently
+                        //so we improve efficiency, reusability (the list is already
+                        //sorted, so I can carry out several searches.
+                        //It is easy to implement a search algorithm once the list
+                        //is sorted.
+                        method.sortPeople(people, 0, people.size() - 1);
                         //The searchPeople method from the Method class (called thanks
                         //the method variable created above). This method accepts
                         //the array list people and the scanner myKB (keyboard)

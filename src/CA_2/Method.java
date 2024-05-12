@@ -43,8 +43,8 @@ public class Method {
         //////////
         //////////
         //Replace this for delivery
-        //String filename = myKB.nextLine();
-String filename = "Club_Form.txt";
+        String filename = myKB.nextLine();
+        //String filename = "Club_Form.txt";
         
         //Now, we create an array list wich will store every Person (Class).
         //This will help us organise every line of data of our file in a
@@ -175,7 +175,7 @@ String filename = "Club_Form.txt";
     //part individually, and then putting them back together.
     //THe sortPeople method takes people array list, the int left (left boundary)
     //and int right (right boundary)
-    public void sortPeople(List<Person> people, int left, int right) {
+    public List<Person> sortPeople(List<Person> people, int left, int right) {
         //This if statement compares if "left" is less to "right", what means
         //that there are still parts to sort.
         if (left < right) {
@@ -203,6 +203,7 @@ String filename = "Club_Form.txt";
             //everything sorted.
             merge(people, left, mid, right);
         }
+        return people;
     }
 
     //THis is the "merge" method to merge the parts from the "sortPeople" method
@@ -283,61 +284,82 @@ String filename = "Club_Form.txt";
     //The next method is to search people according to the input from the user.
     //THis method accepts the people array list and the string first_name,
     //which is the variable we are looking for.
+    //It is a binary search algorithm that takes as attribute the array list
+    //"people" and a string.
+    //It is important to highlight that the array list was already sorted when
+    //the search option was chosen by calling the sort method in the Menu_Imp
+    //java file, just before the searching method.
+    //So, this line defines the searchPeople method, which takes 2 arguments,
+    //a "people" ´Person class array list (database) and a string first name,
+    //which is coming from the input of the user.
     public void searchPeople(List<Person> people, String first_name) {
-        //We create a new variable found of type boolean, which is initialised
-        //with a false value and will help to track individuals during the 
-        //search.
+        //We initialise variables for binary search
+        //"low" is set to 0 to indicate the lowest index of the search
+        int low = 0;
+        //high is the highest index on the search, so it correspond to the size of
+        //the people array list less 1 (because the inclusion of 0 as index)
+        int high = people.size() - 1;
+        //This boolean variable found is false until the value is found
         boolean found = false;
-        //THe next line corresponds to a for, which notation is possible thanks
-        //the use of Person as a class and person as array list, but the meaning
-        //is the same that the traditional one.
-        for (Person person : people) {
-            //IN the next line, there is a comparison between what is stored
-            //in the person object of class Person and what was written by the
-            //user, ignoring casee.
-            if (person.getFirstName().equalsIgnoreCase(first_name)) {
-                //Print the details of the "found" person, which was declared
-                //"false" some lines ago, so, if a matching person is found and
-                //it's  the first match (found is still false), it prints a 
-                //message indicating that that person(s) was found and updates
-                //the found variable to true.
+
+        //In this binary while loop, we iterate while low is not less than 
+        //high.
+        while (low <= high) {
+            //In this line we calculate the middle index of current range (in the
+            //while loop) and call it mid (integer)
+            int mid = low + (high - low) / 2;
+            //Then, the person at that index is retrieve from people.
+            Person person = people.get(mid); // Get person at mid index
+
+            //Here, we create an int variable to comparison, because by calling
+            //compareToIgnoreCase we can get a result 0 in case the strings are
+            //equal so, we can go to the next if statement and print al the data
+            //of the player if found.
+            int comparison = person.getFirstName().compareToIgnoreCase(first_name);
+
+            //If first name matches, we print that the person was found and set 
+            //"found" boolean variable to true
+            if (comparison == 0) {
                 if (!found) {
                     System.out.println("Person(s) found:");
                     found = true;
                 }
-                //Here, the details of the person found are displayed to the
-                //user on the command line.
                 System.out.println("ID: " + person.getId());
                 System.out.println("First Name: " + person.getFirstName());
                 System.out.println("Last Name: " + person.getLastName());
                 System.out.println("Email: " + person.getEmail());
                 System.out.println("Gender: " + person.getGender());
-                //If the person was assigned to a tean, a message is displayed
-                //indicating it.
                 if (person.getTeam() != null) {
                     System.out.println("Team: " + person.getTeam().getTeamName());
                 }
-
-                //If the person was assinged as a player (Staff type), its type 
-                //is display along the type of coach as well
                 if (person instanceof Player) {
                     System.out.println("Staff: Player");
-                    // Display player type for players
                     System.out.println("Player Type: " + ((Player) person).getPlayerType());
-                //If the person is not a Player, but an instance of the Coach
-                //class, its type is display with the type of coach as well
                 } else if (person instanceof Coach) {
                     System.out.println("Staff: Coach");
-                    //We display coach type for coaches
                     System.out.println("Coach Type: " + ((Coach) person).getCoachType());
                 }
-                //We print an empty line only for aesthetical purposes
                 System.out.println();
+                // Move low and high pointers to continue binary search
+                low = mid + 1;
+                high = mid - 1;
+            }
+            //If the comparison result is less than 0 ("compareToIgnoreCase"), 
+            //it means the first_name being searched for comes after the Person 
+            //object's first name in lexicographic order. So, it adjusts the low 
+            //pointer to search the right half of the current range.
+            else if (comparison < 0) {
+                low = mid + 1;
+            }
+            //Now, if the comparison result is greater than 0, it means the 
+            //first_name being searched for comes before the Person object's 
+            //first name in lexicographic order. So, it adjusts the high pointer 
+            //to search the left half of the current range.
+            else {
+                high = mid - 1;
             }
         }
-
-        //THis last line checks if the if statement finds a false found, what
-        //means that no matching people were found
+        //If the person is not found, we print the next message.
         if (!found) {
             System.out.println("No person with first name '" + first_name + "' found.");
         }
@@ -774,7 +796,6 @@ String filename = "Club_Form.txt";
         // Get the specified attribute from the random person
         return attributeGetter.apply(randomPerson);
     }
-
 
     ////////////////////////////////////////////////////////////////////////////
 
